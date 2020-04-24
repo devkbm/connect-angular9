@@ -50,7 +50,7 @@ export class TermComponent extends AppBase implements OnInit {
   }
 
   initForm() {
-    this.form.termForm.reset();
+    this.form.fg.reset();
     this.openDrawer();
   }
 
@@ -63,11 +63,11 @@ export class TermComponent extends AppBase implements OnInit {
   }
 
   selectedItem(item) {    
-    this.form.termForm.patchValue(item);     
+    this.form.fg.patchValue(item);     
   }  
 
   editDrawerOpen(item) {
-    this.form.termForm.patchValue(item);  
+    this.form.fg.patchValue(item);  
     this.openDrawer();   
   }
 

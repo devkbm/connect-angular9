@@ -24,7 +24,7 @@ import { ResponseList } from '../../model/response-list';
 })
 export class DeptFormComponent extends FormBase implements OnInit {
 
-  deptForm: FormGroup;
+  fg: FormGroup;
 
   deptHierarchy: DeptHierarchy[] = [];
 
@@ -52,14 +52,7 @@ export class DeptFormComponent extends FormBase implements OnInit {
               private appAlarmService: AppAlarmService) { super(); }
 
   ngOnInit() {
-    this.getDeptHierarchy();
-    this.newForm();
-  }
-
-  public newForm(): void {
-    this.formType = FormType.NEW;
-
-    this.deptForm = this.fb.group({
+    this.fg = this.fb.group({
       parentDeptCode          : [ null ],
       deptCode                : [ null ],
       deptNameKorean          : [ null ],
@@ -71,25 +64,24 @@ export class DeptFormComponent extends FormBase implements OnInit {
       seq                     : [ 1    ],
       comment                 : [ null ]
     });
+
+    this.getDeptHierarchy();
+    this.newForm();
+  }
+
+  public newForm(): void {
+    this.formType = FormType.NEW;
+
+    this.fg.reset();
+    this.fg.controls['deptCode'].enable();
   }
 
   public modifyForm(formData: Dept): void {
-    this.formType = FormType.MODIFY;
+    this.formType = FormType.MODIFY;    
 
-    this.deptForm = this.fb.group({
-      parentDeptCode          : [ null ],
-      deptCode                : new FormControl({value: null, disabled: true}, {validators: Validators.required}),
-      deptNameKorean          : [ null ],
-      deptAbbreviationKorean  : [ null, [ Validators.required ] ],
-      deptNameEnglish         : [ null, [ Validators.required ] ],
-      deptAbbreviationEnglish : [ null ],
-      fromDate                : [ null ],
-      toDate                  : [ null ],
-      seq                     : [ 1    ],
-      comment                 : [ null ]
-    });
+    this.fg.controls['deptCode'].disable();
 
-    this.deptForm.patchValue(formData);
+    this.fg.patchValue(formData);
   }
 
   public getDept(id: string) {
@@ -133,11 +125,11 @@ export class DeptFormComponent extends FormBase implements OnInit {
 
   public submitDept() {
     this.deptService
-        .saveDept(this.deptForm.getRawValue())
+        .saveDept(this.fg.getRawValue())
         .subscribe(
           (model: ResponseObject<Dept>) => {
             this.appAlarmService.changeMessage(model.message);
-            this.formSaved.emit(this.deptForm.getRawValue());
+            this.formSaved.emit(this.fg.getRawValue());
           },
           (err) => {
             console.log(err);
@@ -148,11 +140,11 @@ export class DeptFormComponent extends FormBase implements OnInit {
 
   public deleteDept() {
     this.deptService
-        .deleteDept(this.deptForm.get('deptCode').value)
+        .deleteDept(this.fg.get('deptCode').value)
         .subscribe(
             (model: ResponseObject<Dept>) => {
             this.appAlarmService.changeMessage(model.message);
-            this.formDeleted.emit(this.deptForm.getRawValue());
+            this.formDeleted.emit(this.fg.getRawValue());
             },
             (err) => {
             console.log(err);
@@ -162,7 +154,7 @@ export class DeptFormComponent extends FormBase implements OnInit {
   }
 
   public closeForm() {
-    this.formClosed.emit(this.deptForm.getRawValue());
+    this.formClosed.emit(this.fg.getRawValue());
   }
 
 }

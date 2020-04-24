@@ -30,7 +30,8 @@ import { DeptService } from '../../service/dept.service';
 })
 export class UserFormComponent extends FormBase implements OnInit {
 
-  public userForm: FormGroup;
+  /* #region Property  */
+  public fg: FormGroup;
   public authList;
   public menuGroupList;
   public deptHierarchy: DeptHierarchy[] = [];
@@ -41,7 +42,7 @@ export class UserFormComponent extends FormBase implements OnInit {
 
   showUploadList = {
     showPreviewIcon: true,
-    showRemoveIcon : false
+    showRemoveIcon: false
   };
 
   fileList = [
@@ -79,13 +80,30 @@ export class UserFormComponent extends FormBase implements OnInit {
 
   @Output()
   formClosed = new EventEmitter();
+  /* #endregion */
 
   constructor(private fb: FormBuilder,
-              private userService: UserService,
-              private deptService: DeptService,
-              private appAlarmService: AppAlarmService) { super(); }
+    private userService: UserService,
+    private deptService: DeptService,
+    private appAlarmService: AppAlarmService) { super(); }
 
   ngOnInit() {
+    this.fg = this.fb.group({
+      userId: new FormControl(null, {
+        validators: Validators.required,
+        asyncValidators: [existingUserValidator(this.userService)],
+        updateOn: 'blur'
+      }),
+      name: new FormControl({ value: null, disabled: false }, { validators: Validators.required }),
+      enabled: [true],
+      password: [null, [Validators.required]],
+      deptCode: [null],
+      mobileNum: [null],
+      email: [null],
+      imageBase64: [null],
+      authorityList: [null],
+      menuGroupList: [null]
+    });
 
     this.newForm();
 
@@ -94,49 +112,24 @@ export class UserFormComponent extends FormBase implements OnInit {
     this.getDeptHierarchy();
   }
 
+  /* #region  Method */
   public newForm(): void {
+    this.formType = FormType.NEW;
     this.imageBase64 = null;
     this.previewImage = null;
     this.fileList = null;
-    this.formType = FormType.NEW;
 
-    this.userForm = this.fb.group({
-      userId          : new FormControl(null, {
-                                                validators: Validators.required,
-                                                asyncValidators: [existingUserValidator(this.userService)],
-                                                updateOn: 'blur'
-                                              }),
-      name            : new FormControl({value: null, disabled: false}, {validators: Validators.required}),
-      enabled         : [ true ],
-      password        : [ null, [ Validators.required ] ],
-      deptCode        : [ null ],
-      mobileNum       : [ null ],
-      email           : [ null ],
-      imageBase64     : [ null ],
-      authorityList   : [ null ],
-      menuGroupList   : [ null ]
-    });
-
+    this.fg.reset();
+    this.fg.get('userId').enable();
   }
 
   public modifyForm(formData: User): void {
     this.formType = FormType.MODIFY;
     this.fileList = null;
 
-    this.userForm = this.fb.group({
-      userId          : new FormControl({value: null, disabled: true}, {validators: Validators.required}),
-      name            : new FormControl({value: null, disabled: false}, {validators: Validators.required}),
-      enabled         : [ true ],
-      password        : [ null, [ Validators.required ] ],
-      deptCode        : [ null ],
-      mobileNum       : [ null ],
-      email           : [ null ],
-      imageBase64     : [ null ],
-      authorityList   : [ null ],
-      menuGroupList   : [ null ]
-    });
+    this.fg.get('userId').disable();
 
-    this.userForm.patchValue(formData);
+    this.fg.patchValue(formData);
   }
 
   public getUser(userId: string) {
@@ -152,8 +145,8 @@ export class UserFormComponent extends FormBase implements OnInit {
             }
 
             this.previewImage = null;
-            this.imageUploadParam = {userId: model.data.userId};
-            if (model.data.imageBase64 != null ) {
+            this.imageUploadParam = { userId: model.data.userId };
+            if (model.data.imageBase64 != null) {
               this.imageBase64 = 'data:image/jpg;base64,' + model.data.imageBase64;
               this.isUploadable = false;
             } else {
@@ -162,14 +155,14 @@ export class UserFormComponent extends FormBase implements OnInit {
             }
 
           } else {
-            this.userForm.reset();
+            this.fg.reset();
           }
 
           this.appAlarmService.changeMessage(model.message);
         },
         (err) => {
           console.log(err);
-          this.userForm.reset();
+          this.fg.reset();
         },
         () => {
           console.log('완료');
@@ -184,14 +177,14 @@ export class UserFormComponent extends FormBase implements OnInit {
       this.userForm.controls[ i ].updateValueAndValidity();
     } */
 
-    console.log(this.userForm);
+    console.log(this.fg);
 
     this.userService
-      .registerUser(this.userForm.getRawValue())
+      .registerUser(this.fg.getRawValue())
       .subscribe(
         (model: ResponseObject<User>) => {
           this.appAlarmService.changeMessage(model.message);
-          this.formSaved.emit(this.userForm.value);
+          this.formSaved.emit(this.fg.value);
         },
         (err) => {
           console.log(err);
@@ -208,7 +201,7 @@ export class UserFormComponent extends FormBase implements OnInit {
       .subscribe(
         (model: ResponseObject<User>) => {
           this.appAlarmService.changeMessage(model.message);
-          this.formDeleted.emit(this.userForm.getRawValue());
+          this.formDeleted.emit(this.fg.getRawValue());
         },
         (err) => {
           console.log(err);
@@ -220,13 +213,13 @@ export class UserFormComponent extends FormBase implements OnInit {
   }
 
   protected checkUser() {
-    const userId: string = this.userForm.get('userId').value;
+    const userId: string = this.fg.get('userId').value;
 
-    this.userForm.get('userId').markAsDirty();
-    this.userForm.get('userId').updateValueAndValidity();
+    this.fg.get('userId').markAsDirty();
+    this.fg.get('userId').updateValueAndValidity();
 
     this.userService
-      .checkUser(this.userForm.get('userId').value)
+      .checkUser(this.fg.get('userId').value)
       .subscribe(
         (model: ResponseObject<boolean>) => {
           this.appAlarmService.changeMessage(model.message);
@@ -290,26 +283,26 @@ export class UserFormComponent extends FormBase implements OnInit {
 
   public getDeptHierarchy(): void {
     this.deptService
-        .getDeptHierarchyList()
-        .subscribe(
-            (model: ResponseList<DeptHierarchy>) => {
-                if ( model.total > 0 ) {
-                this.deptHierarchy = model.data;
-                } else {
-                this.deptHierarchy = [];
-                }
-            },
-            (err) => {
-            console.log(err);
-            },
-            () => {
-            console.log('완료');
-            }
-        );
+      .getDeptHierarchyList()
+      .subscribe(
+        (model: ResponseList<DeptHierarchy>) => {
+          if (model.total > 0) {
+            this.deptHierarchy = model.data;
+          } else {
+            this.deptHierarchy = [];
+          }
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          console.log('완료');
+        }
+      );
   }
 
   public closeForm() {
-    this.formClosed.emit(this.userForm.value);
+    this.formClosed.emit(this.fg.value);
   }
 
   // 미리보기 버튼 클릭시
@@ -328,5 +321,6 @@ export class UserFormComponent extends FormBase implements OnInit {
       this.isUploadable = false;
     }
   }
+  /* #endregion */
 
 }

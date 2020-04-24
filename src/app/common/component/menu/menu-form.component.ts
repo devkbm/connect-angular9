@@ -26,7 +26,7 @@ import { existingMenuValidator } from '../../validator/menu-duplication-validato
 })
 export class MenuFormComponent extends FormBase implements OnInit {
 
-  menuForm: FormGroup;
+  fg: FormGroup;
   programList;
   menuGroupList;
   menuTypeList;
@@ -71,17 +71,8 @@ export class MenuFormComponent extends FormBase implements OnInit {
   }
 
   ngOnInit() {
-
-    this.newForm(null);
-  }
-
-  public newForm(menuGroupCode: string): void {
-    this.formType = FormType.NEW;
-
-    this.getMenuHierarchy(menuGroupCode);
-
-    this.menuForm = this.fb.group({
-      menuGroupCode     : [ menuGroupCode, [ Validators.required ] ],
+    this.fg = this.fb.group({
+      menuGroupCode     : [ null, [ Validators.required ] ],
       menuCode          : new FormControl(null, {
                                                   validators: Validators.required,
                                                   asyncValidators: [existingMenuValidator(this.menuService)],
@@ -93,6 +84,18 @@ export class MenuFormComponent extends FormBase implements OnInit {
       sequence          : [ null ],
       resource          : [ null ]
     });
+
+    this.newForm(null);
+  }
+
+  public newForm(menuGroupCode: string): void {
+    this.formType = FormType.NEW;
+
+    this.getMenuHierarchy(menuGroupCode);
+
+    this.fg.reset();
+    this.fg.controls['menuGroupCode'].setValue(menuGroupCode);
+    this.fg.controls['menuCode'].enable();
   }
 
   public modifyForm(formData: Menu): void {
@@ -100,17 +103,9 @@ export class MenuFormComponent extends FormBase implements OnInit {
 
     this.getMenuHierarchy(formData.menuGroupCode);
 
-    this.menuForm = this.fb.group({
-      menuGroupCode     : [ null, [ Validators.required ] ],
-      menuCode          : new FormControl({value: null, disabled: true}, {validators: Validators.required}),
-      menuName          : [ null, [ Validators.required ] ],
-      menuType          : [ null, [ Validators.required ] ],
-      parentMenuCode    : [ null ],
-      sequence          : [ null ],
-      resource          : [ null ]
-    });
+    this.fg.controls['menuCode'].disable();
 
-    this.menuForm.patchValue(formData);
+    this.fg.patchValue(formData);
   }
 
   public getMenu(menuCode: string) {
@@ -135,10 +130,10 @@ export class MenuFormComponent extends FormBase implements OnInit {
 
   submitMenu() {
     this.menuService
-      .registerMenu(this.menuForm.getRawValue())
+      .registerMenu(this.fg.getRawValue())
       .subscribe(
         (model: ResponseObject<Menu>) => {
-          this.formSaved.emit(this.menuForm.getRawValue());
+          this.formSaved.emit(this.fg.getRawValue());
           this.appAlarmService.changeMessage(model.message);
         },
         (err) => {
@@ -150,10 +145,10 @@ export class MenuFormComponent extends FormBase implements OnInit {
 
   deleteMenu(): void {
     this.menuService
-      .deleteMenu(this.menuForm.getRawValue())
+      .deleteMenu(this.fg.getRawValue())
       .subscribe(
         (model: ResponseObject<Menu>) => {
-          this.formDeleted.emit(this.menuForm.getRawValue());
+          this.formDeleted.emit(this.fg.getRawValue());
           this.appAlarmService.changeMessage(model.message);
         },
         (err) => {
@@ -164,7 +159,7 @@ export class MenuFormComponent extends FormBase implements OnInit {
   }
 
   public closeForm() {
-    this.formClosed.emit(this.menuForm.getRawValue());
+    this.formClosed.emit(this.fg.getRawValue());
   }
 
   getMenuHierarchy(menuGroupCode: string): void {

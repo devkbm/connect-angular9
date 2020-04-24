@@ -14,14 +14,14 @@
     </button>
     <nz-divider nzType="vertical"></nz-divider>
     <button nz-button nzType="danger" nz-popconfirm nzTitle="삭제하시겠습니까?"
-        (nzOnConfirm)="deleteArticle(articleForm.get('pkArticle').value)" (nzOnCancel)="false">
+        (nzOnConfirm)="deleteArticle(fg.get('pkArticle').value)" (nzOnCancel)="false">
         <i nz-icon nzType="delete" theme="outline"></i>
         삭제
     </button>    
 </div>
 
 
-<form nz-form [formGroup]="articleForm" [nzLayout]="'vertical'">      
+<form nz-form [formGroup]="fg" [nzLayout]="'vertical'">      
 
     <input type="hidden" formControlName="fkBoard">
     <input type="hidden" formControlName="pkArticle">

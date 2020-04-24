@@ -1,5 +1,5 @@
-{{deptForm.value | json}}
-<form nz-form [formGroup]="deptForm">
+{{fg.value | json}}
+<form nz-form [formGroup]="fg">
 
     <!--상위부서코드 필드-->
     <nz-form-item class="form-item">
@@ -20,8 +20,8 @@
         </nz-form-control>
     </nz-form-item>
 
-    <!--부서코드 필드 (생성)-->
-    <nz-form-item class="form-item" *ngIf="formType == 'NEW'">
+    <!--부서코드 필드 -->
+    <nz-form-item class="form-item">
         <nz-form-label nzFor="deptCode" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">부서코드</nz-form-label>
         <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
             <input nz-input id="deptCode" formControlName="deptCode" placeholder="부서코드를 입력해주세요.">
@@ -29,18 +29,7 @@
             <nz-form-explain *ngIf="isFieldErrors(deptForm,'deptCode','required')">The input is Required!</nz-form-explain>
             -->
         </nz-form-control>
-    </nz-form-item>
-
-    <!--부서코드 필드 (수정)-->
-    <nz-form-item class="form-item" *ngIf="formType == 'MODIFY'">
-        <nz-form-label nzFor="deptCode" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">부서코드U</nz-form-label>
-        <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-            <input nz-input id="deptCode" formControlName="deptCode" placeholder="부서코드를 입력해주세요.">
-            <!--
-            <nz-form-explain *ngIf="isFieldErrors(deptForm,'deptCode','required')">The input is Required!</nz-form-explain>
-            -->
-        </nz-form-control>
-    </nz-form-item>
+    </nz-form-item>    
 
     <!--부서코드명(한글) 필드-->
     <nz-form-item class="form-item">

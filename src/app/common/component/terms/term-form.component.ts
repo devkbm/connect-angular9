@@ -19,7 +19,7 @@ import { Term } from '../../model/term';
 })
 export class TermFormComponent implements OnInit {
 
-  termForm: FormGroup;
+  fg: FormGroup;
 
   @Output()
   formSaved = new EventEmitter();
@@ -36,7 +36,7 @@ export class TermFormComponent implements OnInit {
 
   ngOnInit() {
 
-    this.termForm = this.fb.group({
+    this.fg = this.fb.group({
       pkTerm            : [ null ],
       domain            : [ null, [ Validators.required ] ],
       term              : [ null, [ Validators.required ] ],
@@ -51,13 +51,13 @@ export class TermFormComponent implements OnInit {
 
   public getTerm() {
     this.termService
-      .getTerm(this.termForm.get('pkTerm').value)
+      .getTerm(this.fg.get('pkTerm').value)
       .subscribe(
         (model: ResponseObject<Term>) => {
           if ( model.total > 0 ) {
-            this.termForm.patchValue(model.data);
+            this.fg.patchValue(model.data);
           } else {
-            this.termForm.reset();
+            this.fg.reset();
           }
           this.appAlarmService.changeMessage(model.message);
         },
@@ -70,11 +70,11 @@ export class TermFormComponent implements OnInit {
 
   public submitTerm() {
     this.termService
-        .registerTerm(this.termForm.getRawValue())
+        .registerTerm(this.fg.getRawValue())
         .subscribe(
           (model: ResponseObject<Term>) => {
             this.appAlarmService.changeMessage(model.message);
-            this.formSaved.emit(this.termForm.getRawValue());
+            this.formSaved.emit(this.fg.getRawValue());
           },
           (err) => {
             console.log(err);
@@ -85,11 +85,11 @@ export class TermFormComponent implements OnInit {
 
   public deleteTerm() {
     this.termService
-      .deleteTerm(this.termForm.get('pkTerm').value)
+      .deleteTerm(this.fg.get('pkTerm').value)
       .subscribe(
         (model: ResponseObject<Term>) => {
           this.appAlarmService.changeMessage(model.message);
-          this.formDeleted.emit(this.termForm.getRawValue());
+          this.formDeleted.emit(this.fg.getRawValue());
         },
         (err) => {
           console.log(err);
@@ -99,7 +99,7 @@ export class TermFormComponent implements OnInit {
   }
 
   public closeForm() {
-    this.formClosed.emit(this.termForm.getRawValue());
+    this.formClosed.emit(this.fg.getRawValue());
   }
 
 }

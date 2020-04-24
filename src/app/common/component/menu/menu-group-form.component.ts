@@ -22,7 +22,7 @@ import { FormBase, FormType } from '../../form/form-base';
 })
 export class MenuGroupFormComponent extends FormBase implements OnInit {
 
-  menuGroupForm: FormGroup;
+  fg: FormGroup;
 
   /**
    * Xs < 576px span size
@@ -48,12 +48,7 @@ export class MenuGroupFormComponent extends FormBase implements OnInit {
               private appAlarmService: AppAlarmService) { super(); }
 
   ngOnInit() {
-    this.newForm();
-  }
-
-  public newForm(): void {
-    this.formType = FormType.NEW;
-    this.menuGroupForm = this.fb.group({
+    this.fg = this.fb.group({
       menuGroupCode   : new FormControl(null, {
                                                 validators: Validators.required,
                                                 asyncValidators: [existingMenuGroupValidator(this.menuService)],
@@ -62,17 +57,22 @@ export class MenuGroupFormComponent extends FormBase implements OnInit {
       menuGroupName   : [ null, [ Validators.required ] ],
       description     : [ null]
     });
+    
+    this.newForm();
+  }
+
+  public newForm(): void {
+    this.formType = FormType.NEW;
+    
+    this.fg.reset();
+    this.fg.controls['menuGroupCode'].enable();
   }
 
   public modifyForm(formData: MenuGroup): void {
     this.formType = FormType.MODIFY;
-    this.menuGroupForm =  this.fb.group({
-      menuGroupCode   : new FormControl({value: null, disabled: true}, {validators: Validators.required}),
-      menuGroupName   : [ null, [ Validators.required ] ],
-      description     : [ null ]
-    });
+    this.fg.controls['menuGroupCode'].disable();
 
-    this.menuGroupForm.patchValue(formData);
+    this.fg.patchValue(formData);
   }
 
   public getMenuGroup(menuGroupCode: string) {
@@ -96,10 +96,10 @@ export class MenuGroupFormComponent extends FormBase implements OnInit {
 
   submitMenuGroup() {
     this.menuService
-      .registerMenuGroup(this.menuGroupForm.getRawValue())
+      .registerMenuGroup(this.fg.getRawValue())
       .subscribe(
         (model: ResponseObject<MenuGroup>) => {
-          this.formSaved.emit(this.menuGroupForm.getRawValue());
+          this.formSaved.emit(this.fg.getRawValue());
           this.appAlarmService.changeMessage(model.message);
         },
         (err) => {
@@ -111,10 +111,10 @@ export class MenuGroupFormComponent extends FormBase implements OnInit {
 
   deleteMenuGroup() {
     this.menuService
-      .deleteMenuGroup(this.menuGroupForm.get('menuGroupCode').value)
+      .deleteMenuGroup(this.fg.get('menuGroupCode').value)
       .subscribe(
         (model: ResponseObject<MenuGroup>) => {
-          this.formDeleted.emit(this.menuGroupForm.getRawValue());
+          this.formDeleted.emit(this.fg.getRawValue());
           this.appAlarmService.changeMessage(model.total + '건의 메뉴그룹이 삭제되었습니다.');
         },
         (err) => {
@@ -125,7 +125,7 @@ export class MenuGroupFormComponent extends FormBase implements OnInit {
   }
 
   public closeForm() {
-    this.formClosed.emit(this.menuGroupForm.getRawValue());
+    this.formClosed.emit(this.fg.getRawValue());
   }
 
 }

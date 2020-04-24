@@ -1,6 +1,6 @@
 <!--{{userForm.value | json}}
 {{fileList | json}}-->
-<form nz-form [formGroup]="userForm" nzLayout="vertical">    
+<form nz-form [formGroup]="fg" nzLayout="vertical">    
     
     <div class="clearfix">
         <img *ngIf="imageBase64 != null" [src]="imageBase64" [ngStyle]="{ 'width': '150px' }"/>
@@ -41,8 +41,8 @@
 
     <div nz-row nzGutter="8">
         <div nz-col nzSpan="12">
-            <!--아이디 필드(생성)-->
-            <nz-form-item *ngIf="this.formType == 'NEW'">
+            <!--아이디 필드-->
+            <nz-form-item>
                 <nz-form-label nzFor="userId" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">
                     아이디
                 </nz-form-label>
@@ -53,21 +53,9 @@
                     <nz-form-explain *ngIf="isFieldErrors(userForm,'userId','exists')">{{userForm.get('userId').getError('exists')}}</nz-form-explain>
                     -->
                 </nz-form-control>        
-            </nz-form-item>
-
-            <!--아이디 필드(수정)-->
-            <nz-form-item *ngIf="this.formType == 'MODIFY'">
-                <nz-form-label nzFor="userId" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">
-                    아이디
-                </nz-form-label>
-                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-                    <input nz-input id="userId" formControlName="userId" placeholder="아이디를 입력해주세요.">
-                    <!--
-                    <nz-form-explain *ngIf="isFieldErrors(userForm,'userId','required')">The input is Required!</nz-form-explain>            
-                    -->
-                </nz-form-control>        
-            </nz-form-item>
+            </nz-form-item>            
         </div>
+
         <div nz-col nzSpan="12">
             <!--이름 필드-->
             <nz-form-item>
@@ -229,7 +217,7 @@
       nzType="danger"
       nz-popconfirm
       nzTitle="삭제하시겠습니까?"
-      (nzOnConfirm)="deleteUser(this.userForm.get('userId').value)"
+      (nzOnConfirm)="deleteUser(this.fg.get('userId').value)"
       (nzOnCancel)="false">
       <i nz-icon nzType="delete" theme="outline"></i>
       삭제

@@ -1,4 +1,4 @@
-{{boardForm.getRawValue() | json}}
+{{fg.getRawValue() | json}}
 
 <div class="footer">
     <button nz-button (click)="closeForm()">        
@@ -6,7 +6,7 @@
         닫기
     </button>
     <nz-divider nzType="vertical"></nz-divider>
-    <button nz-button (click)="getBoard(this.boardForm.get('pkBoard').value)">
+    <button nz-button (click)="getBoard(this.fg.get('pkBoard').value)">
         <i nz-icon nzType="search"></i>
         조회
     </button>
@@ -26,7 +26,7 @@
     </button>
 </div>
 
-<form nz-form [formGroup]="boardForm" nzLayout="vertical">
+<form nz-form [formGroup]="fg" nzLayout="vertical">
 
     <div nz-row nzGutter="8">
         <div nz-col nzSpan="12">

@@ -21,7 +21,7 @@ import { FormBase, FormType } from 'src/app/common/form/form-base';
 })
 export class BoardFormComponent extends FormBase implements OnInit {
 
-  boardForm: FormGroup;
+  fg: FormGroup;
 
   parentBoardItems: BoardHierarchy[] = [];
 
@@ -47,7 +47,7 @@ export class BoardFormComponent extends FormBase implements OnInit {
 
   ngOnInit() {
 
-    this.boardForm = this.fb.group({
+    this.fg = this.fb.group({
       pkBoard         : [ null ],
       ppkBoard        : [ null ],
       boardName       : [ null, [ Validators.required ] ],
@@ -57,39 +57,26 @@ export class BoardFormComponent extends FormBase implements OnInit {
       toDate          : [ new Date(9999, 11, 31) ]
     });
 
+    this.newForm();
   }
 
   public newForm(): void {
     this.formType = FormType.NEW;
 
-    this.boardForm = this.fb.group({
-      pkBoard         : [ null ],
-      ppkBoard        : [ null ],
-      boardName       : [ null, [ Validators.required ] ],
-      boardType       : [ null, [ Validators.required ] ],
-      boardDescription: [ null ],
-      fromDate        : [ new Date() ],
-      toDate          : [ new Date(9999, 11, 31) ]
-    });
+    this.fg.reset();
+    this.fg.get('pkBoard').enable();
+    
   }
 
   public modifyForm(formData: Board): void {
     this.formType = FormType.MODIFY;
 
-    this.boardForm = this.fb.group({
-      pkBoard         : new FormControl({value: null, disabled: true}, {validators: Validators.required}),
-      ppkBoard        : [ null ],
-      boardName       : [ null, [ Validators.required ] ],
-      boardType       : [ null, [ Validators.required ] ],
-      boardDescription: [ null ],
-      fromDate        : [ new Date() ],
-      toDate          : [ new Date(9999, 11, 31) ]
-    });
+    this.fg.get('pkBoard').disable();
 
-    this.boardForm.patchValue(formData);
+    this.fg.patchValue(formData);
   }
 
-  public getBoardTypeList(): void {
+  public getBoardTypeList(): void { 
     this.boardService
         .getBoardTypeList()
         .subscribe(
@@ -123,11 +110,11 @@ export class BoardFormComponent extends FormBase implements OnInit {
   public saveBoard(): void {
 
     this.boardService
-      .saveBoard(this.boardForm.getRawValue())
+      .saveBoard(this.fg.getRawValue())
       .subscribe(
         (model: ResponseObject<Board>) => {
           console.log(model);
-          this.formSaved.emit(this.boardForm.getRawValue());
+          this.formSaved.emit(this.fg.getRawValue());
         },
         (err) => {
           console.log(err);
@@ -140,11 +127,11 @@ export class BoardFormComponent extends FormBase implements OnInit {
 
   public deleteBoard(): void {
     this.boardService
-      .deleteBoard(this.boardForm.getRawValue())
+      .deleteBoard(this.fg.getRawValue())
       .subscribe(
         (model: ResponseObject<Board>) => {
           console.log(model);
-          this.formDeleted.emit(this.boardForm.getRawValue());
+          this.formDeleted.emit(this.fg.getRawValue());
         },
         (err) => {
           console.log(err);
@@ -181,7 +168,7 @@ export class BoardFormComponent extends FormBase implements OnInit {
   }
 
   public closeForm() {
-    this.formClosed.emit(this.boardForm.getRawValue());
+    this.formClosed.emit(this.fg.getRawValue());
   }
 
 }

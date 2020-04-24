@@ -24,7 +24,7 @@ import { GlobalProperty } from 'src/app/global-property';
 })
 export class ArticleFormComponent extends FormBase implements OnInit {
 
-  //#region fields
+  /* #region  Property */
   fileList = [
     /*{
       uid: '1',
@@ -39,43 +39,21 @@ export class ArticleFormComponent extends FormBase implements OnInit {
       name: 'yyy.png',
       status: 'done',
       url: 'http://www.baidu.com/yyy.png'
-    },
-
-    {
-      uid: '3',
-      name: 'zzz.png',
-      status: 'error',
-      response: 'Server Error 500', // custom error message to show
-      url: 'http://www.baidu.com/zzz.png'
-    },
-    {
-      uid: "NiyNWPs6R-KYESIP58T46A==337768679545200",
-      name:"20190402_정재원_2.PNG",
-      status:"done",
-      response:"success",
-      url:"http://localhost:8090/common/file/NiyNWPs6R-KYESIP58T46A==337768679545200"
     }*/
   ];
 
-  articleForm: FormGroup;
-  imageUploadParam = {pgmId: 'board'};
+  fg: FormGroup;
+  imageUploadParam = { pgmId: 'board' };
   fileUploadHeader = null;
   fileUploadUrl;
-  
-  /*new HttpHeaders()
-                          //.set('X-Requested-With', 'XMLHttpRequest')
-                          .set('Authorization', sessionStorage.getItem('token'))
-                          .set('x-auth-token', sessionStorage.getItem('token'));*/
-                          
+
+
   public Editor = ClassicEditor;
-  //contents = new FormControl(null, {});
-
   textData;
-
   article: Article;
 
-  @ViewChild('upload', {static: true}) upload: NzUploadComponent;
-  @ViewChild('ckEditor', {static: true}) ckEditor; //: CKEditorComponent;
+  @ViewChild('upload', { static: true }) upload: NzUploadComponent;
+  @ViewChild('ckEditor', { static: true }) ckEditor; //: CKEditorComponent;
 
   /**
    * Xs < 576px span size
@@ -86,11 +64,10 @@ export class ArticleFormComponent extends FormBase implements OnInit {
 
   formLabelSm = 24;
   fromControlSm = 24;
-
-  //#endregion
+  /* #endregion */
 
   constructor(private fb: FormBuilder,
-              private boardService: BoardService) { super(); }
+    private boardService: BoardService) { super(); }
 
   ngOnInit() {
     this.newForm(null);
@@ -100,10 +77,8 @@ export class ArticleFormComponent extends FormBase implements OnInit {
       //'x-auth-token': sessionStorage.getItem('token')
       //'Content-Type': 'multipart/form-data'
     };
-    
-  }
 
-  //#region public methods
+  }
 
   public newForm(fkBoard): void {
     this.formType = FormType.NEW;
@@ -113,28 +88,28 @@ export class ArticleFormComponent extends FormBase implements OnInit {
     // console.log(this.ckEditor.editorInstance);
     this.ckEditor.writeValue(null);
 
-    this.articleForm = this.fb.group({
-      fkBoard       : [ fkBoard, [ Validators.required ] ], //new FormControl(fkBoard, {validators: Validators.required}),
-      pkArticle     : [ null, [ Validators.required ] ],
-      ppkArticle    : [ null],
-      title         : [ null],
-      contents      :  new FormControl(null, {}),
-      attachFile    : [ null]
+    this.fg = this.fb.group({
+      fkBoard: [fkBoard, [Validators.required]], //new FormControl(fkBoard, {validators: Validators.required}),
+      pkArticle: [null, [Validators.required]],
+      ppkArticle: [null],
+      title: [null],
+      contents: new FormControl(null, {}),
+      attachFile: [null]
     });
   }
 
   public modifyForm(formData: Article): void {
     this.formType = FormType.MODIFY;
-    this.articleForm = this.fb.group({
-      fkBoard       : [ null, [ Validators.required ] ],
-      pkArticle     : [ null, [ Validators.required ] ],
-      ppkArticle    : [ null],
-      title         : [ null],
-      contents      :  new FormControl(null, {}),
-      attachFile    : [ null]
+    this.fg = this.fb.group({
+      fkBoard: [null, [Validators.required]],
+      pkArticle: [null, [Validators.required]],
+      ppkArticle: [null],
+      title: [null],
+      contents: new FormControl(null, {}),
+      attachFile: [null]
     });
 
-    this.articleForm.patchValue(formData);
+    this.fg.patchValue(formData);
   }
 
   public getArticle(id): void {
@@ -152,9 +127,9 @@ export class ArticleFormComponent extends FormBase implements OnInit {
             this.newForm(null);
           }
         },
-        (err) => {},
-        () => {}
-    );
+        (err) => { },
+        () => { }
+      );
   }
 
   public deleteArticle(id): void {
@@ -162,11 +137,11 @@ export class ArticleFormComponent extends FormBase implements OnInit {
     this.boardService.deleteArticle(id)
       .subscribe(
         (model: ResponseObject<Article>) => {
-            this.formDeleted.emit(this.articleForm.getRawValue());
+          this.formDeleted.emit(this.fg.getRawValue());
         },
-        (err) => {},
-        () => {}
-    );
+        (err) => { },
+        () => { }
+      );
   }
 
   fileDown() {
@@ -180,13 +155,13 @@ export class ArticleFormComponent extends FormBase implements OnInit {
     }
   }
 
-  public textChange( {editor}: ChangeEvent) {
-    const data = editor.getData();    
-    this.articleForm.get('contents').setValue(data);
+  public textChange({ editor }: ChangeEvent) {
+    const data = editor.getData();
+    this.fg.get('contents').setValue(data);
   }
 
   public closeForm() {
-    this.formClosed.emit(this.articleForm.getRawValue());
+    this.formClosed.emit(this.fg.getRawValue());
   }
 
   //#endregion
@@ -202,14 +177,14 @@ export class ArticleFormComponent extends FormBase implements OnInit {
       // console.log(this.fileList[val].response[0].uid);
       attachFileIdList.push(String(this.fileList[val].uid));
     }
-    this.articleForm.get('attachFile').setValue(attachFileIdList);
+    this.fg.get('attachFile').setValue(attachFileIdList);
 
     this.boardService
-      .saveArticleJson(this.articleForm.getRawValue())
+      .saveArticleJson(this.fg.getRawValue())
       .subscribe(
         (model: ResponseObject<Article>) => {
           console.log(model);
-          this.formSaved.emit(this.articleForm.getRawValue());
+          this.formSaved.emit(this.fg.getRawValue());
         },
         (err) => {
           console.log(err);

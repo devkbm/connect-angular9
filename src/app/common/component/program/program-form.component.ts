@@ -21,7 +21,7 @@ import { existingWebResourceValidator } from '../../validator/web-resource-dupli
 })
 export class ProgramFormComponent extends FormBase implements OnInit {
 
-  programForm: FormGroup;
+  fg: FormGroup;
 
   /**
    * Xs < 576px span size
@@ -47,13 +47,7 @@ export class ProgramFormComponent extends FormBase implements OnInit {
               private appAlarmService: AppAlarmService) { super(); }
 
   ngOnInit() {
-    this.newForm();
-  }
-
-  public newForm(): void {
-    this.formType = FormType.NEW;
-
-    this.programForm = this.fb.group({
+    this.fg = this.fb.group({
       resourceCode  : new FormControl(null, {
                                               validators: Validators.required,
                                               asyncValidators: [existingWebResourceValidator(this.programService)],
@@ -64,20 +58,23 @@ export class ProgramFormComponent extends FormBase implements OnInit {
       url           : [ null, [ Validators.required ] ],
       description   : [ null]
     });
+
+    this.newForm();
+  }
+
+  public newForm(): void {
+    this.formType = FormType.NEW;
+
+    this.fg.reset();
+    this.fg.controls['resourceCode'].enable();
   }
 
   public modifyForm(formData: WebResource): void {
     this.formType = FormType.MODIFY;
 
-    this.programForm = this.fb.group({
-      resourceCode  : new FormControl({value: null, disabled: true}, {validators: Validators.required}),
-      resourceName  : [ null, [ Validators.required ] ],
-      resourceType  : [ null, [ Validators.required ] ],
-      url           : [ null, [ Validators.required ] ],
-      description   : [ null]
-    });
+    this.fg.controls['resourceCode'].disable();
 
-    this.programForm.patchValue(formData);
+    this.fg.patchValue(formData);
   }
 
   public getProgram(id: string) {
@@ -102,11 +99,11 @@ export class ProgramFormComponent extends FormBase implements OnInit {
 
   public submitProgram() {
     this.programService
-        .registerProgram(this.programForm.getRawValue())
+        .registerProgram(this.fg.getRawValue())
         .subscribe(
           (model: ResponseObject<WebResource>) => {
             this.appAlarmService.changeMessage(model.message);
-            this.formSaved.emit(this.programForm.getRawValue());
+            this.formSaved.emit(this.fg.getRawValue());
           },
           (err) => {
             console.log(err);
@@ -117,11 +114,11 @@ export class ProgramFormComponent extends FormBase implements OnInit {
 
   public deleteProgram() {
     this.programService
-      .deleteProgram(this.programForm.get('resourceCode').value)
+      .deleteProgram(this.fg.get('resourceCode').value)
       .subscribe(
         (model: ResponseObject<WebResource>) => {
           this.appAlarmService.changeMessage(model.message);
-          this.formDeleted.emit(this.programForm.getRawValue());
+          this.formDeleted.emit(this.fg.getRawValue());
         },
         (err) => {
           console.log(err);
@@ -131,7 +128,7 @@ export class ProgramFormComponent extends FormBase implements OnInit {
   }
 
   public closeForm() {
-    this.formClosed.emit(this.programForm.getRawValue());
+    this.formClosed.emit(this.fg.getRawValue());
   }
 
 }
