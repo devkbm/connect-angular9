@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angu
 import { BoardService } from '../service/board.service';
 import { ResponseList } from '../../../common/model/response-list';
 import { BoardHierarchy } from '../model/board-hierarchy';
+import { NzFormatEmitEvent } from 'ng-zorro-antd';
 
-import { NzFormatEmitEvent } from 'ng-zorro-antd/core';
 
 @Component({
   selector: 'app-board-tree',
