@@ -8,6 +8,7 @@ import { DataService } from '../../../common/service/data.service';
 import { ResponseObject } from '../../../common/model/response-object';
 import { ResponseList } from '../../../common/model/response-list';
 import { SurveyForm } from '../model/survey-form';
+import { SurveyItem } from '../model/survey-item';
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +26,14 @@ export class SurveyService extends DataService {
   public getSurveyForm(id: number): Observable<ResponseObject<SurveyForm>> {
     const url = `${this.API_URL}/form/${id}`;
     const options = {
-      headers: this.getAuthorizedHttpHeaders()
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
     };
 
     return this.http
       .get<ResponseObject<SurveyForm>>(url, options)
       .pipe(
-        catchError(this.handleError<ResponseObject<SurveyForm>>('getTeam', null))
+        catchError(this.handleError<ResponseObject<SurveyForm>>('getSurveyForm', null))
       );
   }
 
@@ -42,7 +44,8 @@ export class SurveyService extends DataService {
   public saveSurveyForm(surveyForm: SurveyForm): Observable<ResponseObject<SurveyForm>> {
     const url = `${this.API_URL}/form`;
     const options = {
-      headers: this.getAuthorizedHttpHeaders()
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
     };
 
     return this.http
@@ -52,7 +55,61 @@ export class SurveyService extends DataService {
     );
 
   }
+  
+  public deleteSurveyForm(id: number): Observable<ResponseObject<SurveyForm>> {
+    const url = `${this.API_URL}/form/${id}`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
 
+    return this.http
+      .delete<ResponseObject<SurveyForm>>(url, options)
+      .pipe(
+        catchError(this.handleError<ResponseObject<SurveyForm>>('deleteSurveyForm', null))
+      );
+  }
+  
+  public getSurveyItem(formId: number, itemId: number): Observable<ResponseObject<SurveyItem>> {
+    const url = `${this.API_URL}/form/${formId}/item/${itemId}`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
 
+    return this.http
+      .get<ResponseObject<SurveyItem>>(url, options)
+      .pipe(
+        catchError(this.handleError<ResponseObject<SurveyItem>>('getSurveyItem', null))
+      );
+  }
+
+  public saveSurveyItem(surveyItem: SurveyItem): Observable<ResponseObject<SurveyItem>> {
+    const url = `${this.API_URL}/form/item`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+
+    return this.http
+    .post<ResponseObject<SurveyItem>>(url, surveyItem, options)
+    .pipe(
+      catchError(this.handleError<ResponseObject<SurveyItem>>('saveSurveyItem', null))
+    );
+  }
+
+  public deleteSurveyItem(formId: number, itemId: number): Observable<ResponseObject<SurveyItem>> {
+    const url = `${this.API_URL}/form/${formId}/item/${itemId}`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+
+    return this.http
+      .delete<ResponseObject<SurveyItem>>(url, options)
+      .pipe(
+        catchError(this.handleError<ResponseObject<SurveyItem>>('deleteSurveyItem', null))
+      );
+  }
 
 }

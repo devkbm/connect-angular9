@@ -1,5 +1,6 @@
 export class SurveyItem {
-    id: number;
+    itemId: number;
+    formId: number;
     itemType: string;
     label: string;
     value: string;

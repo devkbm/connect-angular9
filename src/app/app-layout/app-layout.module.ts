@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
-import { CommonLayoutRoutingModule } from './common-layout-routing.module';
+import { NZ_I18N, en_US, NzLayoutModule, NzAvatarModule, NzIconModule, NzMenuModule, NzSelectModule } from 'ng-zorro-antd';
+import { AppLayoutRoutingModule } from './app-layout-routing.module';
 
 import { AppLayoutComponent } from './app-layout.component';
 
@@ -19,10 +19,14 @@ import { EmployeeModule } from '../hrm/employee/employee.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    NgZorroAntdModule,
+    CommonModule,    
     FormsModule,
-    CommonLayoutRoutingModule,
+    AppLayoutRoutingModule,
+    NzLayoutModule,
+    NzMenuModule,
+    NzAvatarModule,
+    NzIconModule,
+    NzSelectModule,
     CommonFuncModule,
     WorkgroupModule,
     AppointmentModule,

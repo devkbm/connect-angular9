@@ -10,13 +10,14 @@ import { ResponseObject } from '../../../common/model/response-object';
 import { FormBase, FormType } from 'src/app/common/form/form-base';
 import { SurveyService } from '../service/survey.service';
 import { SurveyForm } from '../model/survey-form';
+import { SurveyItem } from '../model/survey-item';
 
 @Component({
-  selector: 'app-survey-form',
-  templateUrl: './survey-form.component.html',
-  styleUrls: ['./survey-form.component.css']
+  selector: 'app-survey-item-form',
+  templateUrl: './survey-item-form.component.html',
+  styleUrls: ['./survey-item-form.component.css']
 })
-export class SurveyFormComponent extends FormBase implements OnInit {
+export class SurveyItemFormComponent extends FormBase implements OnInit {
   /**
    * Xs < 576px span size
    * Sm >= 576px span size
@@ -34,10 +35,15 @@ export class SurveyFormComponent extends FormBase implements OnInit {
 
   ngOnInit() {
     this.fg = this.fb.group({
+      itemId    : [ null, [ Validators.required ] ],
       formId    : [ null, [ Validators.required ] ],
-      title     : [ null, [ Validators.required ] ],
+      itemType  : [ null, [ Validators.required ] ],
+      label     : [ null ],
+      value     : [ null ],
+      required  : [ null ],
       comment   : [ null ]
     });
+
     this.newForm();
   }
 
@@ -49,7 +55,7 @@ export class SurveyFormComponent extends FormBase implements OnInit {
     this.fg.reset();
   }
 
-  public modifyForm(formData: SurveyForm): void {
+  public modifyForm(formData: SurveyItem): void {
     this.formType = FormType.MODIFY;
 
     //this.fg.get('formId').disable();
@@ -58,10 +64,11 @@ export class SurveyFormComponent extends FormBase implements OnInit {
     
   }
 
-  public getSurveyForm(id: number): void {
-    this.surveyService.getSurveyForm(id)
+  public getSurveyItem(formId: number, itemId: number): void {
+    this.surveyService
+        .getSurveyItem(formId, itemId)
         .subscribe(
-          (model: ResponseObject<SurveyForm>) => {
+          (model: ResponseObject<SurveyItem>) => {
             if (model.data) {
               this.modifyForm(model.data);
             } else {
@@ -73,11 +80,11 @@ export class SurveyFormComponent extends FormBase implements OnInit {
       );
   }
 
-  public saveSurveyForm(): void {
+  public saveSurveyItem(): void {
     this.surveyService
-        .saveSurveyForm(this.fg.getRawValue())
+        .saveSurveyItem(this.fg.getRawValue())
         .subscribe(
-          (model: ResponseObject<SurveyForm>) => {
+          (model: ResponseObject<SurveyItem>) => {
             this.formSaved.emit(this.fg.getRawValue());
           },
           (err) => {
@@ -86,14 +93,14 @@ export class SurveyFormComponent extends FormBase implements OnInit {
           () => {
             console.log('완료');
           }
-        );
+        );    
   }
 
-  public deleteSurveyForm(id: number): void {
+  public deleteSurveyItem(formId: number, itemId: number): void {
     this.surveyService
-        .deleteSurveyForm(id)
+        .deleteSurveyItem(formId, itemId)
         .subscribe(
-          (model: ResponseObject<SurveyForm>) => {
+          (model: ResponseObject<SurveyItem>) => {
             this.formDeleted.emit(this.fg.getRawValue());
           },
           (err) => {

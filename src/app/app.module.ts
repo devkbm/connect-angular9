@@ -14,11 +14,11 @@ import { ko_KR } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import ko from '@angular/common/locales/ko';
 import { GlobalProperty } from './global-property';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { AppLayoutModule } from './app-layout/app-layout.module';
 import { CommonFuncModule } from './common/common-func.module';
 import { BoardModule } from './cooperation/board/board.module';
 import { CommunicationModule } from './cooperation/communication/communication.module';
+import { SurveyModule } from './cooperation/survey/survey.module';
 
 registerLocaleData(ko);
 
@@ -30,8 +30,7 @@ registerLocaleData(ko);
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    IconsProviderModule,    
-    NgZorroAntdModule,
+    IconsProviderModule,        
     NzLayoutModule,
     NzMenuModule,
     FormsModule,
@@ -42,7 +41,8 @@ registerLocaleData(ko);
     AppLayoutModule,
     CommonFuncModule,
     BoardModule,
-    CommunicationModule
+    CommunicationModule,
+    SurveyModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: ko_KR },    

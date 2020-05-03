@@ -32,6 +32,7 @@ import { LedgerComponent } from '../hrm/appointment/component/ledger/ledger.comp
 import { EmployeeFormComponent } from '../hrm/employee/component/basic-info/employee-form.component';
 import { EmployeeMasterComponent } from '../hrm/employee/component/basic-info/employee-master.component';
 import { HrmTypeComponent } from '../hrm/appointment/component/hrm-type/hrm-type.component';
+import { SurveyFormComponent } from '../cooperation/survey/component/survey-form.component';
 
 
 const layoutroutes: Routes = [
@@ -62,7 +63,8 @@ const layoutroutes: Routes = [
       {path: 'hrmtype',      component: HrmTypeComponent},
       {path: 'appointmentcode',     component: AppointmentCodeComponent},
       {path: 'appointmentledger',   component: LedgerComponent},
-      {path: 'employee',      component: EmployeeMasterComponent}
+      {path: 'employee',      component: EmployeeMasterComponent},
+      {path: 'surveyform',      component: SurveyFormComponent}
     ]
   }
 ];
@@ -71,4 +73,4 @@ const layoutroutes: Routes = [
   imports: [RouterModule.forChild(layoutroutes)],
   exports: [RouterModule]
 })
-export class CommonLayoutRoutingModule { }
+export class AppLayoutRoutingModule { }
