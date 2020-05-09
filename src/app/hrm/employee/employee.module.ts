@@ -15,6 +15,7 @@ import { DeptChangeHistoryGridComponent } from './component/basic-info/dept-chan
 import { JobChangeHistoryGridComponent } from './component/basic-info/job-change-history-grid.component';
 import { StatusChangeHistoryGridComponent } from './component/basic-info/status-change-history-grid.component';
 import { EmployeeGridComponent } from './component/basic-info/employee-grid.component';
+import { DeptEmployeeListComponent } from './component/dept-employee-list/dept-employee-list.component';
 
 @NgModule({
   imports: [
@@ -31,13 +32,15 @@ import { EmployeeGridComponent } from './component/basic-info/employee-grid.comp
     JobChangeHistoryGridComponent,
     StatusChangeHistoryGridComponent,
     EmployeeGridComponent,
-    EmployeeMasterComponent
+    EmployeeMasterComponent,
+    DeptEmployeeListComponent
   ],
   providers: [
   ],
   exports: [
     EmployeeFormComponent,
-    EmployeeMasterComponent
+    EmployeeMasterComponent,
+    DeptEmployeeListComponent
   ]
 })
 export class EmployeeModule { }

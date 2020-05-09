@@ -122,7 +122,8 @@ import { UserSessionService } from './service/user-session.service';
     CommonCodeFormComponent,
     CommonCodeGridComponent,
     CommonCodeTreeComponent,
-    CommonCodeComponent
+    CommonCodeComponent,
+    DeptTreeComponent
   ]
 })
 export class CommonFuncModule { }
