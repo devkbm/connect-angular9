@@ -33,6 +33,16 @@ export class AggridFunction {
     onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;        
+
+        /*
+        params.api.sizeColumnsToFit();
+        window.addEventListener('resize', function() {
+            setTimeout(function() {
+                params.api.sizeColumnsToFit();
+            });
+        });
+        params.api.sizeColumnsToFit();
+        */
     }
 
     setWidthAndHeight(width, height) {

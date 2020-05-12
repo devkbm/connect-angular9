@@ -68,7 +68,7 @@ export class EmployeeGridComponent extends AggridFunction implements OnInit {
   ngOnInit() {
     //this.setWidthAndHeight('100%','500px');
 
-    const param = new SearchEmployee('');
+    const param = new SearchEmployee('','','','',null);
     this.getGridList(param);
   }
 

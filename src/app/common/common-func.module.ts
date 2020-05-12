@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, COMPOSITION_BUFFER_MODE } from '@angular/forms';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -49,6 +49,7 @@ import { MenuService } from './service/menu.service';
 import { DeptService } from './service/dept.service';
 import { CustomHttpInterceptor } from './interceptor/custom-http-interceptor';
 import { UserSessionService } from './service/user-session.service';
+import { CheckableDeptTreeComponent } from './component/dept/checkable-dept-tree.component';
 
 
 @NgModule({
@@ -92,11 +93,13 @@ import { UserSessionService } from './service/user-session.service';
     CommonCodeComponent,
     DeptFormComponent,
     DeptTreeComponent,
+    CheckableDeptTreeComponent,
     DeptComponent
   ],
   providers: [
     { provide: NZ_I18N, useValue: ko_KR },
     { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptor, multi: true },
+    { provide: COMPOSITION_BUFFER_MODE, useValue:false},
     LoginService,
     UserService,
     UserSessionService,
@@ -123,7 +126,8 @@ import { UserSessionService } from './service/user-session.service';
     CommonCodeGridComponent,
     CommonCodeTreeComponent,
     CommonCodeComponent,
-    DeptTreeComponent
+    DeptTreeComponent,
+    CheckableDeptTreeComponent
   ]
 })
 export class CommonFuncModule { }

@@ -31,6 +31,6 @@ export class EmployeeMasterComponent extends AppBase implements OnInit {
 
   public getEmployeeGrid(ee): void {
     console.log(this.searchValue);
-    this.gridEmployee.getGridList(new SearchEmployee(this.searchValue));
+    this.gridEmployee.getGridList(new SearchEmployee(this.searchValue,'', 'BLNG_DEPT', '', []));
   }
 }
