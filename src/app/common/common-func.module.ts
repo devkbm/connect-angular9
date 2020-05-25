@@ -50,6 +50,7 @@ import { DeptService } from './service/dept.service';
 import { CustomHttpInterceptor } from './interceptor/custom-http-interceptor';
 import { UserSessionService } from './service/user-session.service';
 import { CheckableDeptTreeComponent } from './component/dept/checkable-dept-tree.component';
+import { DeptSelectComponent } from './component/dept/dept-select.component';
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import { CheckableDeptTreeComponent } from './component/dept/checkable-dept-tree
     DeptFormComponent,
     DeptTreeComponent,
     CheckableDeptTreeComponent,
+    DeptSelectComponent,
     DeptComponent
   ],
   providers: [
@@ -127,7 +129,8 @@ import { CheckableDeptTreeComponent } from './component/dept/checkable-dept-tree
     CommonCodeTreeComponent,
     CommonCodeComponent,
     DeptTreeComponent,
-    CheckableDeptTreeComponent
+    CheckableDeptTreeComponent,
+    DeptSelectComponent
   ]
 })
 export class CommonFuncModule { }

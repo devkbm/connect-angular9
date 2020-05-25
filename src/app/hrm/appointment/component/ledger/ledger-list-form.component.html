@@ -1,4 +1,4 @@
-<!--{{fg.value | json}}-->
+{{fg.value | json}}
 <!--{{comboList | json}}-->
 
 <form nz-form [formGroup]="fg" nzLayout="vertical">
@@ -167,7 +167,7 @@
                                     [nzDisabled]="!option.useYn">
                                 </nz-option>
                             </nz-select>    
-                            
+                                                        
                             <nz-select *ngIf="list.get('changeType').value == 'DEPT'"              
                                 formControlName="changeCode"
                                 nzShowSearch
@@ -178,7 +178,8 @@
                                     [nzLabel]="option.deptNameKorean"
                                     [nzValue]="option.deptCode">
                                 </nz-option>
-                            </nz-select>
+                            </nz-select>                                                                                                                                                                        
+                            
                         </nz-form-control>
                     </nz-form-item>
                 </div>

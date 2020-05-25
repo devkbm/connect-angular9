@@ -52,7 +52,15 @@ export class EmployeeGridComponent extends AggridFunction implements OnInit {
       { headerName: '사번',     field: 'id',      width: 150 },
       { headerName: '이름',     field: 'name',    width: 150 },
       { headerName: '주민번호', field: 'residentRegistrationNumber',    width: 150 },
-      { headerName: '생일',     field: 'birthday',    width: 150 }
+      { headerName: '생일',     field: 'birthday',    width: 150 },
+      { headerName: '소속부서',        width: 150,
+        valueGetter: function(params) {          
+          let blng_dept = params.data.deptChangeHistory.filter(it => it.deptType === 'BLNG_DEPT');
+          console.log(blng_dept);
+          return blng_dept[0].deptName
+          //return params.data.deptChangeHistory[0].deptName;
+        } 
+      },
     ];
 
     this.defaultColDef = {
