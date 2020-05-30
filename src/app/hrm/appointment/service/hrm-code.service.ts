@@ -9,6 +9,7 @@ import { ResponseObject } from '../../../common/model/response-object';
 import { ResponseList } from '../../../common/model/response-list';
 import { HrmType } from '../model/hrm-type';
 import { HrmTypeDetailCode } from '../model/hrm-type-detail-code';
+import { HrmRelationCode } from '../model/hrm-relation-code';
 
 @Injectable({
   providedIn: 'root'
@@ -118,4 +119,41 @@ export class HrmCodeService extends DataService {
                 catchError((err) => Observable.throw(err))
               );
   }
+
+  getHrmRelationCode(id: string): Observable<ResponseObject<HrmRelationCode>> {
+    const url = `${this.API_URL}/hrmrelation/${id}`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+
+    return this.http.get<ResponseObject<HrmRelationCode>>(url, options).pipe(
+      catchError((err) => Observable.throw(err))
+    );
+  }
+
+  saveHrmRelationCode(code: HrmRelationCode): Observable<ResponseObject<HrmRelationCode>> {
+    const url = `${this.API_URL}/hrmrelation`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+    return this.http.post<ResponseObject<HrmRelationCode>>(url, code, options).pipe(
+      catchError((err) => Observable.throw(err))
+    );
+  }
+
+  deleteHrmRelationCode(id: string): Observable<ResponseObject<HrmRelationCode>> {
+    const url = `${this.API_URL}/hrmrelation/${id}`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+    return this.http
+              .delete<ResponseObject<HrmRelationCode>>(url, options)
+              .pipe(
+                catchError((err) => Observable.throw(err))
+              );
+  }
+
 }
