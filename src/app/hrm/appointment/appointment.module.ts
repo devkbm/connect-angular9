@@ -28,6 +28,10 @@ import { HrmTypeComponent } from './component/hrm-type/hrm-type.component';
 import { HrmTypeGridComponent } from './component/hrm-type/hrm-type-grid.component';
 import { HrmTypeCodeFormComponent } from './component/hrm-type/hrm-type-code-form.component';
 import { HrmTypeCodeGridComponent } from './component/hrm-type/hrm-type-code-grid.component';
+import { HrmRelationCodeFormComponent } from './component/hrm-type/hrm-relation-code-form.component';
+import { HrmRelationCodeGridComponent } from './component/hrm-type/hrm-relation-code-grid.component';
+import { HrmRelationCode } from './model/hrm-relation-code';
+import { HrmRelationCodeComponent } from './component/hrm-type/hrm-relation-code.component';
 
 
 
@@ -58,7 +62,11 @@ import { HrmTypeCodeGridComponent } from './component/hrm-type/hrm-type-code-gri
     LedgerListDetailGridComponent,
     LedgerGridComponent,
     LedgerListGridComponent,
-    LedgerComponent
+    LedgerComponent,
+
+    HrmRelationCodeFormComponent,
+    HrmRelationCodeGridComponent,
+    HrmRelationCodeComponent
   ],
   providers: [    
     HrmCodeService,
@@ -68,7 +76,8 @@ import { HrmTypeCodeGridComponent } from './component/hrm-type/hrm-type-code-gri
   exports: [
     HrmTypeComponent,
     AppointmentCodeComponent,
-    LedgerComponent
+    LedgerComponent,
+    HrmRelationCodeComponent
   ]
 })
 export class AppointmentModule { }

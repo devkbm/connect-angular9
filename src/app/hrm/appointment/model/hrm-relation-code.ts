@@ -13,12 +13,36 @@ export class HrmRelationCode {
      */
     relCodeName: string;    
     /**
-     * 부모 인사유형상세코드 Id
+     * 부모 인사유형코드 Id
      */
-    parentId: string;
+    parentTypeId: string;
+    /**
+     * 부모 인사유형코드명
+     */
+    parentTypeName: string;
+    /**
+     * 부모 인사상세코드 Id
+     */
+    parentDetailId: string;
+    /**
+     * 부모 인사상세코드명
+     */
+    parentDetailName: string;
+    /**
+     * 자식 인사유형코드 Id
+     */
+    childTypeId: string;
+    /**
+     * 자식 인사유형코드명
+     */
+    childTypeName: string;
     /**
      * 자식 인사유형상세코드 Id
      */
-    childId: string;
+    childDetailId: string;
+    /**
+     * 자식 인사유형상세코드명
+     */
+    childDetailName: string;
   }
   

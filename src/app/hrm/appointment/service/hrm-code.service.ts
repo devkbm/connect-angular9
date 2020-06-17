@@ -120,6 +120,19 @@ export class HrmCodeService extends DataService {
               );
   }
 
+  getHrmRelationCodeList(params: any): Observable<ResponseList<HrmRelationCode>> {
+    const url = `${this.API_URL}/hrmrelation`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true,
+      params: params
+    };
+
+    return this.http.get<ResponseList<HrmRelationCode>>(url, options).pipe(
+      catchError((err) => Observable.throw(err))
+    );
+  }
+
   getHrmRelationCode(id: string): Observable<ResponseObject<HrmRelationCode>> {
     const url = `${this.API_URL}/hrmrelation/${id}`;
     const options = {

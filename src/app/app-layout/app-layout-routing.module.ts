@@ -34,6 +34,8 @@ import { EmployeeMasterComponent } from '../hrm/employee/component/basic-info/em
 import { HrmTypeComponent } from '../hrm/appointment/component/hrm-type/hrm-type.component';
 import { SurveyFormComponent } from '../cooperation/survey/component/survey-form.component';
 import { DeptEmployeeListComponent } from '../hrm/employee/component/dept-employee-list/dept-employee-list.component';
+import { HrmRelationCodeFormComponent } from '../hrm/appointment/component/hrm-type/hrm-relation-code-form.component';
+import { HrmRelationCodeComponent } from '../hrm/appointment/component/hrm-type/hrm-relation-code.component';
 
 
 const layoutroutes: Routes = [
@@ -66,7 +68,9 @@ const layoutroutes: Routes = [
       {path: 'appointmentledger',   component: LedgerComponent},
       {path: 'employee',      component: EmployeeMasterComponent},
       {path: 'surveyform',      component: SurveyFormComponent},
-      {path: 'deptemployeelist',      component: DeptEmployeeListComponent}
+      {path: 'deptemployeelist',      component: DeptEmployeeListComponent},
+      {path: 'relationcode',      component: HrmRelationCodeComponent}
+      
     ]
   }
 ];
