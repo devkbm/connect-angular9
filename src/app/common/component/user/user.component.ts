@@ -3,6 +3,8 @@ import { Location } from '@angular/common';
 import { UserGridComponent } from './user-grid.component';
 import { UserFormComponent } from './user-form.component';
 import { AppBase } from '../../app/app-base';
+import { UserService } from '../../service/user.service';
+import { ResponseList } from '../../model/response-list';
 
 @Component({
   selector: 'app-user',
@@ -22,7 +24,7 @@ export class UserComponent extends AppBase implements OnInit {
   @ViewChild('userForm', {static: false})
   form: UserFormComponent;
 
-  constructor(location: Location) { 
+  constructor(location: Location,private userService: UserService) { 
     super(location); 
   }
 
@@ -64,6 +66,9 @@ export class UserComponent extends AppBase implements OnInit {
   initForm() {
     this.form.newForm();
     this.openDrawer();
-  }  
+  }    
 
+  test() {
+    window.location.href = 'http://localhost:8090/oauth2/authorization/google';
+  }
 }

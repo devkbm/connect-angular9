@@ -184,4 +184,18 @@ export class UserService extends DataService {
         catchError((err) => Observable.throw(err))
       );
   }
+
+  getTest(): Observable<ResponseList<any>> {
+    const url = GlobalProperty.serverUrl + '/oauth2/authorization/google';
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+
+    return this.http
+      .get<ResponseList<any>>(url, options)
+      .pipe(
+        catchError((err) => Observable.throw(err))
+      );
+  }
 }

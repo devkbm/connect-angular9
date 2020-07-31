@@ -22,26 +22,15 @@
         </div>
         <div nz-col nzSpan="12">
             <!--공통코드 필드 (생성)-->
-            <nz-form-item class="form-item" *ngIf="formType == 'NEW'">
-                <nz-form-label nzFor="code" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">공통코드C</nz-form-label>
+            <nz-form-item class="form-item">
+                <nz-form-label nzFor="code" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">공통코드</nz-form-label>
                 <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
                     <input nz-input id="code" formControlName="code" placeholder="공통코드를 입력해주세요.">
                     <!--
                     <nz-form-explain *ngIf="isFieldErrors(codeForm,'code','required')">The input is Required!</nz-form-explain>
                     -->
                 </nz-form-control>
-            </nz-form-item>
-
-            <!--공통코드 필드 (수정)-->
-            <nz-form-item class="form-item" *ngIf="formType == 'MODIFY'">
-                <nz-form-label nzFor="code" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">공통코드U</nz-form-label>
-                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-                    <input nz-input id="code" formControlName="code" placeholder="공통코드를 입력해주세요.">
-                    <!--
-                    <nz-form-explain *ngIf="isFieldErrors(codeForm,'code','required')">The input is Required!</nz-form-explain>
-                    -->
-                </nz-form-control>
-            </nz-form-item>
+            </nz-form-item>            
         </div>
     </div>
 
@@ -78,7 +67,8 @@
             <nz-form-item class="form-item">
                 <nz-form-label nzFor="fromDate" [nzXs]="formLabelXs" [nzSm]="formLabelSm">시작일</nz-form-label>
                 <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-                    <nz-date-picker id="fromDate" formControlName="fromDate" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"></nz-date-picker>            
+                    <nz-date-picker id="fromDate" formControlName="fromDate" nzFormat="yyyy-MM-dd"></nz-date-picker>
+                    <!--<nz-date-picker id="fromDate" formControlName="fromDate" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"></nz-date-picker>-->
                 </nz-form-control>
             </nz-form-item>            
         </div>
@@ -87,7 +77,8 @@
             <nz-form-item class="form-item">
                 <nz-form-label nzFor="toDate" [nzXs]="formLabelXs" [nzSm]="formLabelSm">종료일</nz-form-label>
                 <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-                    <nz-date-picker id="toDate" formControlName="toDate" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"></nz-date-picker>                        
+                    <nz-date-picker id="toDate" formControlName="toDate" nzFormat="yyyy-MM-dd"></nz-date-picker>
+                    <!--<nz-date-picker id="toDate" formControlName="toDate" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"></nz-date-picker>-->
                 </nz-form-control>
             </nz-form-item>        
         </div>

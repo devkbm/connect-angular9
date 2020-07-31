@@ -74,9 +74,11 @@ export class CommonCodeFormComponent extends FormBase implements OnInit {
   public newForm(parentId): void {
     this.formType = FormType.NEW;
 
-    this.fg.reset();
-    this.fg.controls['parentId'].setValue(parentId);
-    this.fg.controls['code'].enable();
+    this.fg.reset();    
+    this.fg.get('code').enable();
+    this.fg.get('parentId').setValue(parentId);
+    this.fg.get('fromDate').setValue(new Date());
+    this.fg.get('toDate').setValue(new Date(9999, 11, 31));    
   }
 
   public modifyForm(formData: CommonCode): void {

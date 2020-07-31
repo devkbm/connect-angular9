@@ -8,6 +8,8 @@ import {
 
 import { DeptService } from '../../service/dept.service';
 import { AppAlarmService } from '../../service/app-alarm.service';
+import { existingDeptValidator } from '../../validator/dept-duplication-validator.directive';
+
 
 import { ResponseObject } from '../../model/response-object';
 import { FormBase, FormType } from '../../form/form-base';
@@ -54,7 +56,11 @@ export class DeptFormComponent extends FormBase implements OnInit {
   ngOnInit() {
     this.fg = this.fb.group({
       parentDeptCode          : [ null ],
-      deptCode                : [ null ],
+      deptCode                : new FormControl(null, {
+                                  validators: Validators.required,     
+                                  asyncValidators: [existingDeptValidator(this.deptService)],
+                                  updateOn: 'blur'
+                                }),
       deptNameKorean          : [ null ],
       deptAbbreviationKorean  : [ null, [ Validators.required ] ],
       deptNameEnglish         : [ null, [ Validators.required ] ],

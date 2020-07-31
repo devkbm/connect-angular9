@@ -13,6 +13,9 @@ import { ResponseObject } from '../../model/response-object';
 import { WebResource } from '../../model/web-resource';
 import { FormBase, FormType } from '../../form/form-base';
 import { existingWebResourceValidator } from '../../validator/web-resource-duplication-validator.directive';
+import { CommonCodeService } from '../../service/common-code.service';
+import { CommonCode } from '../../model/common-code';
+import { ResponseList } from '../../model/response-list';
 
 @Component({
   selector: 'app-program-form',
@@ -33,6 +36,8 @@ export class ProgramFormComponent extends FormBase implements OnInit {
   formLabelSm = 4;
   formControlSm = 20;
 
+  resourceTypeList: CommonCode[];
+
   @Output()
   formSaved = new EventEmitter();
 
@@ -44,6 +49,7 @@ export class ProgramFormComponent extends FormBase implements OnInit {
 
   constructor(private fb: FormBuilder,
               private programService: ProgramService,
+              private commCodeService: CommonCodeService,
               private appAlarmService: AppAlarmService) { super(); }
 
   ngOnInit() {
@@ -59,9 +65,29 @@ export class ProgramFormComponent extends FormBase implements OnInit {
       description   : [ null]
     });
 
+    this.getCommonCodeList();
     this.newForm();
   }
-
+  private getCommonCodeList() {
+    this.commCodeService
+      .getCommonCodeListByParentId('COM0001')
+      .subscribe(
+        (model: ResponseList<CommonCode>) => {
+          if ( model.total > 0 ) {
+            //this.modifyForm(model.data);
+            console.log(model.data);
+            this.resourceTypeList = model.data;
+          } else {
+            //this.newForm();
+          }
+          this.appAlarmService.changeMessage(model.message);
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {}
+      );
+  }
   public newForm(): void {
     this.formType = FormType.NEW;
 

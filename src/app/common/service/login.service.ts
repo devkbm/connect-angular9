@@ -7,6 +7,9 @@ import { UserToken } from '../model/user-token';
 
 import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
+import { GlobalProperty } from 'src/app/global-property';
+import { ResponseList } from '../model/response-list';
+import { ResponseObject } from '../model/response-object';
 
 @Injectable()
 export class LoginService extends DataService {
@@ -66,5 +69,19 @@ export class LoginService extends DataService {
         // catchError((err) => Observable.throw(err))
       );
   }
+  
+  getAuthToken(): Observable<UserToken> {
+    const url = 'http://localhost:8090/authToken';    
+    
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+
+    return this.http.get<UserToken>(url, options).pipe(
+      catchError(this.handleError<UserToken>('getAuthToken', null))
+    );      
+  }
+
 
 }

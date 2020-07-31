@@ -45,6 +45,28 @@ export class DeptService extends DataService {
     );
   }
 
+  /**
+   * 부서코드 중복여부를 검증한다.
+   * @param id 부서코드
+   */
+  getValidateDeptDup(id: string): Observable<ResponseObject<boolean>> {
+    const url = `${this.API_URL}/${id}/valid`;
+
+    //const url = GlobalProperty.serverUrl + '/common/depttree';
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+
+    return this.http.get<ResponseObject<boolean>>(url, options).pipe(
+      catchError(this.handleError<ResponseObject<boolean>>('getValidateDeptDup', null))
+    );
+  }
+
+  /**
+   * 부서정보를 조회한다.
+   * @param id 부서코드
+   */
   getDept(id: string): Observable<ResponseObject<Dept>> {
     const url = `${this.API_URL}/${id}`;
     const options = {
@@ -57,17 +79,10 @@ export class DeptService extends DataService {
     );
   }
 
-  /*getProgramDupCheck(id: string): Observable<ResponseObject<boolean>> {
-    const url = `${this.API_URI}/${id}/check`;
-    const options = {
-      headers: this.getAuthorizedHttpHeaders()
-    };
-
-    return this.http.get<ResponseObject<boolean>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
-    );
-  }*/
-
+  /**
+   * 부서정보를 저장한다.
+   * @param dept 
+   */
   saveDept(dept: Dept): Observable<ResponseObject<Dept>> {
     const url = `${this.API_URL}`;
     const options = {
@@ -79,6 +94,10 @@ export class DeptService extends DataService {
     );
   }
 
+  /**
+   * 부서정보를 삭제한다.
+   * @param id 부서코드
+   */
   deleteDept(id: string): Observable<ResponseObject<Dept>> {
     const url = `${this.API_URL}/${id}`;
     const options = {
