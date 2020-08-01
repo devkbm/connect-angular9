@@ -1,12 +1,12 @@
 {{fg.value | json}}
-<form nz-form [formGroup]="fg" nzLayout="vertical">    
+<form nz-form [formGroup]="fg" nzLayout="vertical">
 
     <!-- 식별자 필드-->
     <!--
     <nz-form-item class="form-item">
         <nz-form-label nzFor="id" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">식별자</nz-form-label>
         <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-            <input nz-input id="id" formControlName="id">            
+            <input nz-input id="id" formControlName="id">
         </nz-form-control>
       </nz-form-item>
     -->
@@ -23,12 +23,12 @@
                 </nz-form-control>
             </nz-form-item>
             -->
-            
+
             <!--인사유형 필드-->
             <nz-form-item class="form-item">
                 <nz-form-label nzFor="hrmType" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">인사유형코드</nz-form-label>
                 <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-                    <nz-select formControlName="hrmType" [nzSize]="'default'"                        
+                    <nz-select formControlName="hrmType" [nzSize]="'default'"
                         nzShowSearch nzPlaceHolder="인사유형을 선택해주세요.">
                             <nz-option
                                 *ngFor="let option of hrmTypeList"
@@ -40,19 +40,24 @@
             </nz-form-item>
         </div>
 
-        <div nz-col nzSpan="12">                        
+        <div nz-col nzSpan="12">
             <nz-form-item class="form-item">
                 <nz-form-label nzFor="code" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">인사유형코드</nz-form-label>
-                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
+                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" [nzErrorTip]="errorTpl">
                     <input nz-input id="code" formControlName="code" placeholder="인사유형코드를 입력해주세요.">
-                    <!--
-                    <nz-form-explain *ngIf="isFieldErrors(fg,'code','required')">The input is Required!</nz-form-explain>
-                    -->
+                    <ng-template #errorTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">
+                          필수 입력 값입니다.
+                      </ng-container>
+                      <ng-container *ngIf="control.hasError('exists')">
+                          기존 코드가 존재합니다.
+                      </ng-container>
+                    </ng-template>
                 </nz-form-control>
-            </nz-form-item>                             
+            </nz-form-item>
         </div>
     </div>
-    
+
     <!--인사유형코드명(한글) 필드-->
     <nz-form-item class="form-item">
         <nz-form-label nzFor="codeName" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">인사유형코드명</nz-form-label>
@@ -63,13 +68,13 @@
             -->
         </nz-form-control>
     </nz-form-item>
-        
+
     <div nz-row nzGutter="8">
         <div nz-col nzSpan="12">
             <!--사용여부 필드-->
             <nz-form-item>
-                <nz-form-label 
-                    nzFor="useYn"    
+                <nz-form-label
+                    nzFor="useYn"
                     [nzXs]="formLabelXs"
                     [nzSm]="formLabelSm">사용여부
                 </nz-form-label>
@@ -85,15 +90,15 @@
             <nz-form-item class="form-item">
                 <nz-form-label nzFor="sequence" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">출력 순번</nz-form-label>
                 <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-                    <nz-input-number id="sequence" formControlName="sequence" [nzMin]="0" [nzMax]="9999" [nzStep]="1"></nz-input-number>        
+                    <nz-input-number id="sequence" formControlName="sequence" [nzMin]="0" [nzMax]="9999" [nzStep]="1"></nz-input-number>
                     <!--
                     <nz-form-explain *ngIf="isFieldErrors(fg,'sequence','required')">The input is Required!</nz-form-explain>
-                    -->    
+                    -->
                 </nz-form-control>
             </nz-form-item>
         </div>
     </div>
-    
+
     <!--설명 필드-->
     <nz-form-item>
         <nz-form-label nzFor="comment" [nzXs]="formLabelXs" [nzSm]="formLabelSm">설명</nz-form-label>
@@ -108,16 +113,16 @@
         <button
         nz-button
         (click)="getHrmType(fg.get('id').value)">
-        <i nz-icon nzType="search" nzTheme="outline"></i>        
+        <i nz-icon nzType="search" nzTheme="outline"></i>
         조회
-    </button>    
+    </button>
     <nz-divider nzType="vertical"></nz-divider>
     <button
         nz-button
         (click)="closeForm()">
         <i nz-icon nzType="form" theme="outline"></i>
         닫기
-    </button>    
+    </button>
     <nz-divider nzType="vertical"></nz-divider>
     <button
         nz-button

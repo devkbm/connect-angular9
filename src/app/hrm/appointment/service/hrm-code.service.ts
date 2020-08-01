@@ -29,7 +29,19 @@ export class HrmCodeService extends DataService {
     };
 
     return this.http.get<ResponseList<HrmType>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseList<HrmType>>('getHrmTypeList', null))
+    );
+  }
+
+  getVaildHrmType(id: string): Observable<ResponseObject<boolean>> {
+    const url = `${this.API_URL}/hrmtype/${id}/valid`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+
+    return this.http.get<ResponseObject<boolean>>(url, options).pipe(
+      catchError(this.handleError<ResponseObject<boolean>>('getVaildHrmType', null))
     );
   }
 
@@ -41,7 +53,7 @@ export class HrmCodeService extends DataService {
     };
 
     return this.http.get<ResponseObject<HrmType>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseObject<HrmType>>('getHrmType', null))
     );
   }
 
@@ -53,7 +65,7 @@ export class HrmCodeService extends DataService {
       withCredentials: true
     };
     return this.http.post<ResponseObject<HrmType>>(url, dept, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseObject<HrmType>>('saveHrmType', null))
     );
   }
 
@@ -66,7 +78,7 @@ export class HrmCodeService extends DataService {
     return this.http
               .delete<ResponseObject<HrmType>>(url, options)
               .pipe(
-                catchError((err) => Observable.throw(err))
+                catchError(this.handleError<ResponseObject<HrmType>>('deleteHrmType', null))
               );
   }
 
@@ -79,7 +91,7 @@ export class HrmCodeService extends DataService {
     };
 
     return this.http.get<ResponseList<HrmTypeDetailCode>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseList<HrmTypeDetailCode>>('getHrmTypeDetailCodeList', null))
     );
   }
 
@@ -91,7 +103,7 @@ export class HrmCodeService extends DataService {
     };
 
     return this.http.get<ResponseObject<HrmTypeDetailCode>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseObject<HrmTypeDetailCode>>('getHrmTypeDetailCode', null))
     );
   }
 
@@ -103,7 +115,7 @@ export class HrmCodeService extends DataService {
       withCredentials: true
     };
     return this.http.post<ResponseObject<HrmTypeDetailCode>>(url, dept, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseObject<HrmTypeDetailCode>>('saveHrmTypeDetailCode', null))
     );
   }
 
@@ -116,7 +128,7 @@ export class HrmCodeService extends DataService {
     return this.http
               .delete<ResponseObject<HrmTypeDetailCode>>(url, options)
               .pipe(
-                catchError((err) => Observable.throw(err))
+                catchError(this.handleError<ResponseObject<HrmTypeDetailCode>>('deleteHrmTypeDetailCode', null))
               );
   }
 
@@ -129,7 +141,7 @@ export class HrmCodeService extends DataService {
     };
 
     return this.http.get<ResponseList<HrmRelationCode>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseList<HrmRelationCode>>('getHrmRelationCodeList', null))
     );
   }
 
@@ -141,7 +153,7 @@ export class HrmCodeService extends DataService {
     };
 
     return this.http.get<ResponseObject<HrmRelationCode>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseObject<HrmRelationCode>>('getHrmRelationCode', null))
     );
   }
 
@@ -152,7 +164,7 @@ export class HrmCodeService extends DataService {
       withCredentials: true
     };
     return this.http.post<ResponseObject<HrmRelationCode>>(url, code, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseObject<HrmRelationCode>>('saveHrmRelationCode', null))
     );
   }
 
@@ -165,7 +177,7 @@ export class HrmCodeService extends DataService {
     return this.http
               .delete<ResponseObject<HrmRelationCode>>(url, options)
               .pipe(
-                catchError((err) => Observable.throw(err))
+                catchError(this.handleError<ResponseObject<HrmRelationCode>>('deleteHrmRelationCode', null))
               );
   }
 

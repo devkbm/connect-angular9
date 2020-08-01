@@ -9,6 +9,8 @@ import { map, tap, catchError } from 'rxjs/operators';
 
 export function existingUserValidator(userService: UserService): AsyncValidatorFn {
   return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+    console.log(control.root);
+    console.log(control.parent.get('name').value);
     return control.value ? userService
               .checkUser(control.value)
               .pipe(

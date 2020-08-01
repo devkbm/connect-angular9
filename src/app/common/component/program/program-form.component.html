@@ -1,52 +1,71 @@
 {{fg.value | json}}
-<form nz-form [formGroup]="fg">
-    <nz-form-item>
+<form nz-form [formGroup]="fg" nzLayout="vertical">
+  <!-- 1 row -->
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
         <nz-form-label nzFor="resourceCode" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">리소스코드</nz-form-label>
         <nz-form-control nzHasFeedback [nzXs]="formControlXs" [nzSm]="formControlSm" [nzErrorTip]="errorTpl">
-            <input nz-input id="resourceCode" formControlName="resourceCode" placeholder="리소스코드를 입력해주세요.">            
+            <input nz-input id="resourceCode" formControlName="resourceCode" placeholder="리소스코드를 입력해주세요.">
             <ng-template #errorTpl let-control>
-                <ng-container *ngIf="control.hasError('required')">
-                    필수 입력 값입니다.
-                </ng-container>
-                <ng-container *ngIf="control.hasError('exists')">
-                    기존 코드가 존재합니다.
-                </ng-container>
-              </ng-template>
+              <ng-container *ngIf="control.hasError('required')">
+                  필수 입력 값입니다.
+              </ng-container>
+              <ng-container *ngIf="control.hasError('exists')">
+                  기존 코드가 존재합니다.
+              </ng-container>
+            </ng-template>
         </nz-form-control>
-    </nz-form-item>    
+      </nz-form-item>
+    </div>
 
-    <nz-form-item>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
         <nz-form-label nzFor="resourceName" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">리소스명</nz-form-label>
         <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" nzErrorTip="필수 입력 값입니다.">
-            <input nz-input id="resourceName" formControlName="resourceName" placeholder="리소스명을 입력해주세요.">            
+            <input nz-input id="resourceName" formControlName="resourceName" placeholder="리소스명을 입력해주세요.">
         </nz-form-control>
-    </nz-form-item>
+      </nz-form-item>
+    </div>
+  </div>
 
-    <nz-form-item>
+  <!-- 2 row -->
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
         <nz-form-label nzFor="resourceType" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">리소스타입</nz-form-label>
         <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" nzErrorTip="필수 입력 값입니다.">
             <!--<input nz-input id="resourceType" formControlName="resourceType" placeholder="리소스타입을 입력해주세요.">-->
-            
+
             <nz-select formControlName="resourceType" [nzSize]="'default'" nzPlaceHolder="Please select">
                 <nz-option *ngFor="let option of resourceTypeList" [nzLabel]="option.codeName" [nzValue]="option.code"></nz-option>
             </nz-select>
-            
-        </nz-form-control>
-    </nz-form-item>
 
-    <nz-form-item>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="12">
+      <nz-form-item>
         <nz-form-label nzFor="url" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">URL 정보</nz-form-label>
         <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" nzErrorTip="필수 입력 값입니다.">
-            <input nz-input id="url" formControlName="url" placeholder="URL 정보를 입력해주세요.">            
+            <input nz-input id="url" formControlName="url" placeholder="URL 정보를 입력해주세요.">
         </nz-form-control>
     </nz-form-item>
+    </div>
+  </div>
 
-    <nz-form-item>
+  <!-- 3 row -->
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
         <nz-form-label nzFor="description" [nzXs]="formLabelXs" [nzSm]="formLabelSm">설명</nz-form-label>
         <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-            <textarea nz-input id="description" formControlName="description" placeholder="리소스 설명을 입력해주세요." [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+            <textarea nz-input id="description" formControlName="description" placeholder="리소스 설명을 입력해주세요." [nzAutosize]="{ minRows: 6, maxRows: 10 }"></textarea>
         </nz-form-control>
-    </nz-form-item>
+      </nz-form-item>
+    </div>
+  </div>
 
 </form>
 

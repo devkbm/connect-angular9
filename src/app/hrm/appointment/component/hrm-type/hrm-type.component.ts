@@ -30,23 +30,23 @@ export class HrmTypeComponent extends AppBase implements OnInit {
   ledgerListQueryKey = 'empId';
   ledgerListQueryValue;
 
-  constructor(location: Location) { 
-    super(location); 
+  constructor(location: Location) {
+    super(location);
   }
 
   ngOnInit() {
   }
-   
+
   public refreshGridHrmType(): void {
     this.closeDrawerHrmType();
     this.gridHrmType.getGridList('');
   }
 
   selectHrmType(row): void {
-    this.selectedHrmTypeRow = row;    
+    this.selectedHrmTypeRow = row;
     this.gridHrmTypeCode.getGridList(row.id);
   }
-  
+
   public newHrmTypeForm(): void {
     this.drawerVisibleHrmType = true;
     this.formHrmType.newForm();
@@ -59,10 +59,10 @@ export class HrmTypeComponent extends AppBase implements OnInit {
 
   public closeDrawerHrmType(): void {
     this.drawerVisibleHrmType = false;
-  }  
+  }
 
   public selectHrmTypeCode(row): void {
-    console.log(row);    
+    console.log(row);
   }
 
   public refreshGridHrmTypeCode(): void {
@@ -78,7 +78,7 @@ export class HrmTypeComponent extends AppBase implements OnInit {
 
   public editHrmTypeCodeForm(row): void {
     this.formHrmTypeCode.getHrmTypeDetailCode(row.id);
-    this.drawerVisibleHrmTypeCode = true;    
+    this.drawerVisibleHrmTypeCode = true;
   }
 
   public closeDrawerHrmTypeCode(): void {

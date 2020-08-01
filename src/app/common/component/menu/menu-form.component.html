@@ -5,7 +5,7 @@
         <div nz-col nzSpan="12">
             <!--메뉴그룹코드 필드-->
             <nz-form-item>
-                <nz-form-label                        
+                <nz-form-label
                     nzFor="menuGroupCode" nzRequired
                     [nzXs]="formLabelXs" [nzSm]="formLabelSm" >
                     메뉴그룹코드
@@ -24,7 +24,7 @@
                             [nzLabel]="option.menuGroupName"
                             [nzValue]="option.menuGroupCode">
                         </nz-option>
-                    </nz-select>            
+                    </nz-select>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -36,13 +36,13 @@
                     [nzXs]="formLabelXs" [nzSm]="formLabelSm">
                     상위 메뉴코드
                 </nz-form-label>
-                
+
                 <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" >
                     <nz-tree-select
                         id="parentMenuCode"
                         [nzNodes]="menuHiererachy"
-                        [nzAllowClear]="true"     
-                        [nzPlaceHolder]="'상위 메뉴 없음'"               
+                        [nzAllowClear]="true"
+                        [nzPlaceHolder]="'상위 메뉴 없음'"
                         formControlName="parentMenuCode">
                     </nz-tree-select>
                 </nz-form-control>
@@ -52,46 +52,26 @@
 
     <div nz-row nzGutter="8">
         <div nz-col nzSpan="12">
-            <!--메뉴코드 필드(생성)-->
-            <nz-form-item *ngIf="formType == 'NEW'">
+            <!--메뉴코드 필드-->
+            <nz-form-item>
                 <nz-form-label
                     nzFor="menuCode" nzRequired
                     [nzXs]="formLabelXs" [nzSm]="formLabelSm">메뉴코드
                 </nz-form-label>
-                <nz-form-control nzHasFeedback [nzXs]="formControlXs" [nzSm]="formControlSm">
+                <nz-form-control nzHasFeedback [nzXs]="formControlXs" [nzSm]="formControlSm" [nzErrorTip]="errorTpl">
                     <input
                         nz-input
                         id="menuCode"
                         formControlName="menuCode"
                         placeholder="메뉴코드를 입력해주세요.">
-                    <!--
-                    <nz-form-explain *ngIf="isFieldErrors(menuForm,'menuCode','required')">
-                        The input is Required!
-                    </nz-form-explain>
-                    <nz-form-explain *ngIf="isFieldErrors(menuForm,'menuCode','exists')">
-                        기존코드가 존재합니다.
-                    </nz-form-explain>
-                    -->
-                </nz-form-control>
-            </nz-form-item>
-
-            <!--메뉴코드 필드(수정)-->
-            <nz-form-item *ngIf="formType == 'MODIFY'">
-                <nz-form-label
-                    nzFor="menuCode" nzRequired
-                    [nzXs]="formLabelXs" [nzSm]="formLabelSm">메뉴코드
-                </nz-form-label>
-                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-                    <input
-                        nz-input
-                        id="menuCode"
-                        formControlName="menuCode"
-                        placeholder="메뉴코드를 입력해주세요.">
-                    <!--
-                    <nz-form-explain *ngIf="isFieldErrors(menuForm,'menuCode','required')">
-                        The input is Required!
-                    </nz-form-explain>
-                    -->                        
+                      <ng-template #errorTpl let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                              필수 입력 값입니다.
+                          </ng-container>
+                          <ng-container *ngIf="control.hasError('exists')">
+                              기존 코드가 존재합니다.
+                          </ng-container>
+                      </ng-template>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -170,7 +150,7 @@
                     </nz-select>
                 </nz-form-control>
             </nz-form-item>
-        </div>            
+        </div>
     </div>
     <!--순번 필드-->
     <nz-form-item>

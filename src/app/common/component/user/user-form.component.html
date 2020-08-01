@@ -1,10 +1,10 @@
 <!--{{userForm.value | json}}
 {{fileList | json}}-->
-<form nz-form [formGroup]="fg" nzLayout="vertical">    
-    
+<form nz-form [formGroup]="fg" nzLayout="vertical">
+
     <div class="clearfix">
         <img *ngIf="imageBase64 != null" [src]="imageBase64" [ngStyle]="{ 'width': '150px' }"/>
-        
+
         <nz-upload
             nzAction="http://localhost:8090/user/image"
             nzListType="picture-card"
@@ -12,7 +12,7 @@
             [nzShowButton]="isUploadable"
             [nzShowUploadList]="showUploadList"
             [nzData]="imageUploadParam"
-            [nzPreview]="handlePreview"         
+            [nzPreview]="handlePreview"
             [nzRemove]="handleRemove"
             (nzChange)="fileUploadChange($event)">
             <i nz-icon nzType="plus"></i>
@@ -28,8 +28,8 @@
 
     <!--사용여부 필드-->
     <nz-form-item>
-        <nz-form-label 
-            nzFor="enabled"    
+        <nz-form-label
+            nzFor="enabled"
             [nzXs]="formLabelXs"
             [nzSm]="formLabelSm">사용여부
         </nz-form-label>
@@ -46,32 +46,34 @@
                 <nz-form-label nzFor="userId" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">
                     아이디
                 </nz-form-label>
-                <nz-form-control nzHasFeedback [nzXs]="formControlXs" [nzSm]="formControlSm">
+                <nz-form-control nzHasFeedback [nzXs]="formControlXs" [nzSm]="formControlSm" [nzErrorTip]="errorTpl">
                     <input nz-input id="userId" formControlName="userId" placeholder="아이디를 입력해주세요.">
-                    <!--
-                    <nz-form-explain *ngIf="isFieldErrors(userForm,'userId','required')">The input is Required!</nz-form-explain>
-                    <nz-form-explain *ngIf="isFieldErrors(userForm,'userId','exists')">{{userForm.get('userId').getError('exists')}}</nz-form-explain>
-                    -->
-                </nz-form-control>        
-            </nz-form-item>            
+                    <ng-template #errorTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">
+                          필수 입력 값입니다.
+                      </ng-container>
+                      <ng-container *ngIf="control.hasError('exists')">
+                          기존 아이디가 존재합니다.
+                      </ng-container>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
         </div>
 
         <div nz-col nzSpan="12">
             <!--이름 필드-->
             <nz-form-item>
-                <nz-form-label 
-                    nzFor="name" 
-                    nzRequired
-                    [nzXs]="formLabelXs"
-                    [nzSm]="formLabelSm">
+                <nz-form-label nzFor="name" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">
                     이름
                 </nz-form-label>
 
-                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" nzHasFeedback>
+                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" nzHasFeedback [nzErrorTip]="errorTpl">
                     <input style="ime-mode: inactive" id="name" nz-input formControlName="name">
-                    <!--
-                    <nz-form-explain *ngIf="isFieldErrors(userForm,'name','required')">The input is Required!</nz-form-explain>
-                    -->
+                    <ng-template #errorTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">
+                          필수 입력 값입니다.
+                      </ng-container>
+                    </ng-template>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -81,13 +83,10 @@
         <div nz-col nzSpan="12">
             <!--핸드폰번호 필드-->
             <nz-form-item>
-                <nz-form-label 
-                    nzFor="mobileNum"             
-                    [nzXs]="formLabelXs"
-                    [nzSm]="formLabelSm">
+                <nz-form-label nzFor="mobileNum" [nzXs]="formLabelXs" [nzSm]="formLabelSm">
                     핸드폰 번호
                 </nz-form-label>
-        
+
                 <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" nzHasFeedback>
                     <input style="ime-mode: inactive" id="mobileNum" nz-input formControlName="mobileNum">
                     <!--
@@ -100,13 +99,13 @@
         <div nz-col nzSpan="12">
             <!--이메일 필드-->
             <nz-form-item>
-                <nz-form-label 
-                    nzFor="email"             
+                <nz-form-label
+                    nzFor="email"
                     [nzXs]="formLabelXs"
                     [nzSm]="formLabelSm">
                     이메일
                 </nz-form-label>
-        
+
                 <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" nzHasFeedback>
                     <input style="ime-mode: inactive" id="email" nz-input formControlName="email">
                     <!--
@@ -124,13 +123,13 @@
                 [nzXs]="formLabelXs" [nzSm]="formLabelSm">
                 부서
             </nz-form-label>
-            
+
             <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" >
                 <nz-tree-select
                     id="deptCode"
                     [nzNodes]="deptHierarchy"
-                    [nzAllowClear]="true"            
-                    [nzPlaceHolder]="'부서 없음'"    
+                    [nzAllowClear]="true"
+                    [nzPlaceHolder]="'부서 없음'"
                     formControlName="deptCode">
                 </nz-tree-select>
             </nz-form-control>
@@ -138,7 +137,7 @@
 
     <!--비밀번호 필드-->
     <nz-form-item>
-        <nz-form-label 
+        <nz-form-label
             nzFor="password"
             nzRequired
             [nzXs]="formLabelXs"
@@ -158,13 +157,13 @@
         <div nz-col nzSpan="12">
             <!--권한 필드-->
             <nz-form-item>
-                <nz-form-label 
-                    nzFor="authorityList" 
-                    [nzXs]="formLabelXs" 
+                <nz-form-label
+                    nzFor="authorityList"
+                    [nzXs]="formLabelXs"
                     [nzSm]="formLabelSm">
                     권한
                 </nz-form-label>
-        
+
                 <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
                     <nz-select formControlName="authorityList" [nzSize]="'default'" nzMode="multiple" nzPlaceHolder="Please select">
                         <nz-option *ngFor="let option of authList" [nzLabel]="option.description" [nzValue]="option.authority"></nz-option>
@@ -175,13 +174,13 @@
         <div nz-col nzSpan="12">
             <!--메뉴그룹 필드-->
             <nz-form-item>
-                <nz-form-label 
+                <nz-form-label
                     nzFor="menuGroupList"
                     [nzXs]="formLabelXs"
                     [nzSm]="formLabelSm">
                     메뉴그룹
                 </nz-form-label>
-        
+
                 <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
                     <nz-select formControlName="menuGroupList" [nzSize]="'default'" nzMode="multiple" nzPlaceHolder="Please select">
                         <nz-option *ngFor="let option of menuGroupList" [nzLabel]="option.menuGroupName" [nzValue]="option.menuGroupCode"></nz-option>

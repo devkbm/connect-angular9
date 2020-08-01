@@ -14,6 +14,7 @@ import { HrmCodeService } from '../../service/hrm-code.service';
 import { HrmType } from '../../model/hrm-type';
 import { AppointmentCodeService } from '../../service/appointment-code.service';
 import { ResponseList } from 'src/app/common/model/response-list';
+import { existingHrmTypeValidator } from '../../validator/hrm-type-duplication-validator';
 
 
 @Component({
@@ -26,8 +27,8 @@ export class HrmTypeFormComponent extends FormBase implements OnInit {
   fg: FormGroup;
 
   hrmTypeList: any[];
-  
-  constructor(private fb:FormBuilder,
+
+  constructor(private fb: FormBuilder,
               private hrmCodeService: HrmCodeService,
               private appointmentCodeService: AppointmentCodeService,
               private appAlarmService: AppAlarmService) { super(); }
@@ -38,7 +39,11 @@ export class HrmTypeFormComponent extends FormBase implements OnInit {
     this.fg = this.fb.group({
       id        : [ null, [ Validators.required ] ], //new FormControl(fkBoard, {validators: Validators.required}),
       hrmType   : [ null, [ Validators.required ] ],
-      code      : [ null, [ Validators.required ] ],
+      code      : new FormControl(null, {
+                    validators: Validators.required,
+                    asyncValidators: [existingHrmTypeValidator(this.hrmCodeService)],
+                    updateOn: 'blur'
+                  }),
       codeName  : [ null, [ Validators.required ] ],
       useYn     : [ null],
       sequence  : [ null],
@@ -46,24 +51,24 @@ export class HrmTypeFormComponent extends FormBase implements OnInit {
     });
 
     this.newForm();
-  }  
+  }
 
   public newForm(): void {
     this.formType = FormType.NEW;
-    
+
     this.fg.reset();
     this.fg.get('useYn').setValue(true);
-    this.fg.controls.code.enable();    
+    this.fg.controls.code.enable();
   }
 
   public modifyForm(formData: HrmType): void {
-    this.formType = FormType.MODIFY;    
+    this.formType = FormType.MODIFY;
 
-    this.fg.patchValue(formData);            
-    this.fg.controls.code.disable();    
+    this.fg.patchValue(formData);
+    this.fg.controls.code.disable();
   }
 
-  public select(param) {    
+  public select(param) {
     this.getHrmType(param.value['id']);
   }
 
@@ -72,9 +77,9 @@ export class HrmTypeFormComponent extends FormBase implements OnInit {
         .getTypeList()
         .subscribe(
           (model: ResponseList<any>) => {
-            if ( model.total > 0 ) {              
+            if ( model.total > 0 ) {
               this.hrmTypeList = model.data;
-            }             
+            }
           },
           (err) => {
             console.log(err);
@@ -136,6 +141,6 @@ export class HrmTypeFormComponent extends FormBase implements OnInit {
   public closeForm() {
     this.formClosed.emit(this.fg.getRawValue());
   }
-  
+
 }
 

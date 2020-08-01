@@ -99,7 +99,7 @@ export class UserFormComponent extends FormBase implements OnInit {
       password: [null, [Validators.required]],
       deptCode: [null],
       mobileNum: [null],
-      email: [null],
+      email: new FormControl({ value: null, disabled: false }, { validators: Validators.email }),
       imageBase64: [null],
       authorityList: [null],
       menuGroupList: [null]

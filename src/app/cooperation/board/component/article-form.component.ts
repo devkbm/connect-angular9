@@ -67,9 +67,18 @@ export class ArticleFormComponent extends FormBase implements OnInit {
   /* #endregion */
 
   constructor(private fb: FormBuilder,
-    private boardService: BoardService) { super(); }
+              private boardService: BoardService) { super(); }
 
   ngOnInit() {
+    this.fg = this.fb.group({
+      fkBoard: [null, [Validators.required]], //new FormControl(fkBoard, {validators: Validators.required}),
+      pkArticle: [null, [Validators.required]],
+      ppkArticle: [null],
+      title: [null, [Validators.required]],
+      contents: new FormControl(null, {}),
+      attachFile: [null]
+    });
+
     this.newForm(null);
     this.fileUploadUrl = GlobalProperty.serverUrl + '/common/file/';
     this.fileUploadHeader = {
@@ -82,33 +91,17 @@ export class ArticleFormComponent extends FormBase implements OnInit {
 
   public newForm(fkBoard): void {
     this.formType = FormType.NEW;
-
+    this.fg.reset();
+    this.fg.get('fkBoard').setValue(fkBoard);
     this.fileList = [];
     this.textData = null;
     // console.log(this.ckEditor.editorInstance);
     this.ckEditor.writeValue(null);
-
-    this.fg = this.fb.group({
-      fkBoard: [fkBoard, [Validators.required]], //new FormControl(fkBoard, {validators: Validators.required}),
-      pkArticle: [null, [Validators.required]],
-      ppkArticle: [null],
-      title: [null],
-      contents: new FormControl(null, {}),
-      attachFile: [null]
-    });
   }
 
   public modifyForm(formData: Article): void {
     this.formType = FormType.MODIFY;
-    this.fg = this.fb.group({
-      fkBoard: [null, [Validators.required]],
-      pkArticle: [null, [Validators.required]],
-      ppkArticle: [null],
-      title: [null],
-      contents: new FormControl(null, {}),
-      attachFile: [null]
-    });
-
+    this.fg.reset();
     this.fg.patchValue(formData);
   }
 

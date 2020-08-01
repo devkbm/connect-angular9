@@ -65,7 +65,9 @@ export class BoardFormComponent extends FormBase implements OnInit {
 
     this.fg.reset();
     this.fg.get('pkBoard').enable();
-    
+
+    this.fg.get('fromDate').setValue(new Date());
+    this.fg.get('toDate').setValue(new Date(9999, 11, 31));
   }
 
   public modifyForm(formData: Board): void {
@@ -76,7 +78,7 @@ export class BoardFormComponent extends FormBase implements OnInit {
     this.fg.patchValue(formData);
   }
 
-  public getBoardTypeList(): void { 
+  public getBoardTypeList(): void {
     this.boardService
         .getBoardTypeList()
         .subscribe(

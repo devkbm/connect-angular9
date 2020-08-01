@@ -7,25 +7,31 @@
             <!--메뉴그룹코드 필드-->
             <nz-form-item>
                 <nz-form-label nzFor="menuGroupCode" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">메뉴그룹코드c</nz-form-label>
-                <nz-form-control nzHasFeedback [nzXs]="formControlXs" [nzSm]="fromControlSm">
+                <nz-form-control nzHasFeedback [nzXs]="formControlXs" [nzSm]="fromControlSm" [nzErrorTip]="errorTpl">
                     <input nz-input id="menuGroupCode" formControlName="menuGroupCode" placeholder="메뉴그룹코드를 입력해주세요.">
-                    <!--
-                    <nz-form-explain *ngIf="isFieldErrors(menuGroupForm,'menuGroupCode','required')">The input is Required!</nz-form-explain>
-                    <nz-form-explain *ngIf="isFieldErrors(menuGroupForm,'menuGroupCode','exists')">기존 메뉴그룹코드가 존재합니다</nz-form-explain>            
-                    -->
+                    <ng-template #errorTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">
+                          필수 입력 값입니다.
+                      </ng-container>
+                      <ng-container *ngIf="control.hasError('exists')">
+                          기존 코드가 존재합니다.
+                      </ng-container>
+                  </ng-template>
                 </nz-form-control>
-            </nz-form-item>            
+            </nz-form-item>
         </div>
 
         <div nz-col nzSpan="12">
             <!--메뉴그룹명 필드-->
             <nz-form-item>
                 <nz-form-label nzFor="menuGroupName" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">메뉴그룹명</nz-form-label>
-                <nz-form-control [nzXs]="formControlXs" [nzSm]="fromControlSm">
+                <nz-form-control nzHasFeedback [nzXs]="formControlXs" [nzSm]="fromControlSm" [nzErrorTip]="errorTpl">
                     <input nz-input id="menuGroupName" formControlName="menuGroupName" placeholder="메뉴그룹명을 입력해주세요.">
-                    <!--
-                    <nz-form-explain *ngIf="isFieldErrors(menuGroupForm,'menuGroupName','required')">The input is Required!</nz-form-explain>
-                    -->
+                    <ng-template #errorTpl let-control>
+                        <ng-container *ngIf="control.hasError('required')">
+                            필수 입력 값입니다.
+                        </ng-container>
+                    </ng-template>
                 </nz-form-control>
             </nz-form-item>
         </div>
