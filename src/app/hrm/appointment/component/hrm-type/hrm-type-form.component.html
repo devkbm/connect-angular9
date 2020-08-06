@@ -61,11 +61,13 @@
     <!--인사유형코드명(한글) 필드-->
     <nz-form-item class="form-item">
         <nz-form-label nzFor="codeName" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">인사유형코드명</nz-form-label>
-        <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
+        <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" [nzErrorTip]="errorTpl">
             <input nz-input id="codeName" formControlName="codeName" placeholder="인사유형코드명을 입력해주세요.">
-            <!--
-            <nz-form-explain *ngIf="isFieldErrors(fg,'codeName','required')">The input is Required!</nz-form-explain>
-            -->
+            <ng-template #errorTpl let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                    필수 입력 값입니다.
+                </ng-container>                
+              </ng-template>            
         </nz-form-control>
     </nz-form-item>
 

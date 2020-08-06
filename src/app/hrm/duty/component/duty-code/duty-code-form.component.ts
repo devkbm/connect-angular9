@@ -1,3 +1,4 @@
+import { DutyCode } from './../../model/duty-code';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {
   FormBuilder,
@@ -9,57 +10,49 @@ import {
 import { FormBase, FormType } from 'src/app/common/form/form-base';
 import { ResponseObject } from 'src/app/common/model/response-object';
 import { AppAlarmService } from 'src/app/common/service/app-alarm.service';
-import { AppointmentCodeService } from '../../service/appointment-code.service';
-import { AppointmentCode } from '../../model/appointment-code';
+import { DutyCodeService } from '../../service/duty-code.service';
 
 @Component({
-  selector: 'app-appointment-code-form',
-  templateUrl: './appointment-code-form.component.html',
-  styleUrls: ['./appointment-code-form.component.css']
+  selector: 'app-duty-code-form',
+  templateUrl: './duty-code-form.component.html',
+  styleUrls: ['./duty-code-form.component.css']
 })
-export class AppointmentCodeFormComponent extends FormBase implements OnInit {
+export class DutyCodeFormComponent extends FormBase implements OnInit {
 
   fg: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private appointmentCodeService: AppointmentCodeService,
-              private appAlarmService: AppAlarmService) { super(); }
+              private dutyCodeService: DutyCodeService,
+              private appAlarmService: AppAlarmService) {  super(); }
 
   ngOnInit() {
     this.fg = this.fb.group({
-      code      : [ null, [ Validators.required ] ],
-      codeName  : [ null, [ Validators.required ] ],
-      sequence  : [ null],
-      useYn     : [ null],
-      endDateYn : [ null],
-      comment   : [ null]
+      dutyCode  : [ null, [ Validators.required ] ],
+      dutyName  : [ null, [ Validators.required ] ],
+      enabled   : [ null]
     });
-
-    this.newForm();
   }
 
   public newForm(): void {
     this.formType = FormType.NEW;
 
     this.fg.reset();
-    this.fg.get('code').enable();
-
-    this.fg.get('useYn').setValue(true);
+    this.fg.get('dutyCode').enable();
+    this.fg.get('enabled').setValue(true);
   }
 
-  public modifyForm(formData: AppointmentCode): void {
+  public modifyForm(formData: DutyCode) {
     this.formType = FormType.MODIFY;
 
     this.fg.patchValue(formData);
-
-    this.fg.get('code').disable();
+    this.fg.get('dutyCode').disable();
   }
 
   public getForm(id: string): void {
-    this.appointmentCodeService
-        .getAppointmentCode(id)
+    this.dutyCodeService
+        .getDutyCode(id)
         .subscribe(
-          (model: ResponseObject<AppointmentCode>) => {
+          (model: ResponseObject<DutyCode>) => {
             if ( model.total > 0 ) {
               this.modifyForm(model.data);
             } else {
@@ -75,10 +68,10 @@ export class AppointmentCodeFormComponent extends FormBase implements OnInit {
   }
 
   public submitForm(): void {
-    this.appointmentCodeService
-        .saveAppointmentCode(this.fg.getRawValue())
+    this.dutyCodeService
+        .saveDutyCode(this.fg.getRawValue())
         .subscribe(
-          (model: ResponseObject<AppointmentCode>) => {
+          (model: ResponseObject<DutyCode>) => {
             this.appAlarmService.changeMessage(model.message);
             this.formSaved.emit(this.fg.getRawValue());
           },
@@ -90,10 +83,10 @@ export class AppointmentCodeFormComponent extends FormBase implements OnInit {
   }
 
   public deleteForm(): void {
-    this.appointmentCodeService
-        .deleteAppointmentCode(this.fg.get('code').value)
+    this.dutyCodeService
+        .deleteDutyCode(this.fg.get('dutyCode').value)
         .subscribe(
-            (model: ResponseObject<AppointmentCode>) => {
+            (model: ResponseObject<DutyCode>) => {
             this.appAlarmService.changeMessage(model.message);
             this.formDeleted.emit(this.fg.getRawValue());
             },

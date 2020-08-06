@@ -12,7 +12,7 @@ import { AppAlarmService } from 'src/app/common/service/app-alarm.service';
 
 import { HrmCodeService } from '../../service/hrm-code.service';
 import { HrmTypeDetailCode } from '../../model/hrm-type-detail-code';
-
+import { existingHrmTypeDetailCodeValidator } from '../../validator/hrm-type-detail-code-duplication-validator';
 
 @Component({
   selector: 'app-hrm-type-code-form',
@@ -31,7 +31,11 @@ export class HrmTypeCodeFormComponent extends FormBase implements OnInit {
     this.fg = this.fb.group({
       id        : [ null, [ Validators.required ] ], //new FormControl(fkBoard, {validators: Validators.required}),
       typeId    : [ null, [ Validators.required ] ],
-      code      : [ null, [ Validators.required ] ],
+      code      : new FormControl(null, {
+                                    validators: Validators.required,
+                                    asyncValidators: [existingHrmTypeDetailCodeValidator(this.hrmCodeService)],
+                                    updateOn: 'blur'
+                                  }),
       codeName  : [ null, [ Validators.required ] ],
       useYn     : [ null],
       sequence  : [ null],

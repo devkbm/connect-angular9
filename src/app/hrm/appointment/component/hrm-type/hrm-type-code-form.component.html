@@ -24,8 +24,16 @@
             <!--인사유형상세코드 필드-->
             <nz-form-item class="form-item" >
                 <nz-form-label nzFor="code_code" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">인사유형상세코드</nz-form-label>
-                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-                    <input nz-input id="code_code" formControlName="code" placeholder="인사유형상세코드를 입력해주세요.">            
+                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" [nzErrorTip]="errorTpl">
+                    <input nz-input id="code_code" formControlName="code" placeholder="인사유형상세코드를 입력해주세요.">
+                    <ng-template #errorTpl let-control>
+                        <ng-container *ngIf="control.hasError('required')">
+                            필수 입력 값입니다.
+                        </ng-container>
+                        <ng-container *ngIf="control.hasError('exists')">
+                            기존 코드가 존재합니다.
+                        </ng-container>
+                    </ng-template>                    
                 </nz-form-control>
             </nz-form-item>    
         </div>
@@ -34,8 +42,13 @@
             <!--인사유형상세코드명 필드-->
             <nz-form-item class="form-item">
                 <nz-form-label nzFor="code_codeName" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">인사유형상세코드명</nz-form-label>
-                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
-                    <input nz-input id="code_codeName" formControlName="codeName" placeholder="인사유형상세코드명을 입력해주세요.">            
+                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" [nzErrorTip]="errorTpl">
+                    <input nz-input id="code_codeName" formControlName="codeName" placeholder="인사유형상세코드명을 입력해주세요.">
+                    <ng-template #errorTpl let-control>
+                        <ng-container *ngIf="control.hasError('required')">
+                            필수 입력 값입니다.
+                        </ng-container>                        
+                    </ng-template>                    
                 </nz-form-control>
             </nz-form-item>
         </div>

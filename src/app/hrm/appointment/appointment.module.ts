@@ -41,16 +41,15 @@ import { HrmRelationCodeComponent } from './component/hrm-type/hrm-relation-code
     FormsModule,
     ReactiveFormsModule,
     CommonFuncModule,
-    NgZorroAntdModule,    
+    NgZorroAntdModule,
     AgGridModule.withComponents([ButtonRendererComponent, CheckboxRendererComponent]),
   ],
   declarations: [
     HrmTypeComponent,
     HrmTypeFormComponent,
-    HrmTypeGridComponent,    
+    HrmTypeGridComponent,
     HrmTypeCodeFormComponent,
     HrmTypeCodeGridComponent,
-    
     AppointmentCodeComponent,
     AppointmentCodeFormComponent,
     AppointmentCodeGridComponent,
@@ -68,7 +67,7 @@ import { HrmRelationCodeComponent } from './component/hrm-type/hrm-relation-code
     HrmRelationCodeGridComponent,
     HrmRelationCodeComponent
   ],
-  providers: [    
+  providers: [
     HrmCodeService,
     AppointmentCodeService,
     LedgerService

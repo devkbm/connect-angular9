@@ -95,6 +95,18 @@ export class HrmCodeService extends DataService {
     );
   }
 
+  getValidHrmTypeDetailCode(id: string): Observable<ResponseObject<boolean>> {
+    const url = `${this.API_URL}/typedetailcode/${id}/valid`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+
+    return this.http.get<ResponseObject<boolean>>(url, options).pipe(
+      catchError(this.handleError<ResponseObject<boolean>>('getValidHrmTypeDetailCode', null))
+    );
+  }
+
   getHrmTypeDetailCode(id: string): Observable<ResponseObject<HrmTypeDetailCode>> {
     const url = `${this.API_URL}/typedetailcode/${id}`;
     const options = {

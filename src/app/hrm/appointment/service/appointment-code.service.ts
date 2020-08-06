@@ -29,7 +29,19 @@ export class AppointmentCodeService extends DataService {
      };
 
     return this.http.get<ResponseList<AppointmentCode>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseList<AppointmentCode>>('getAppointmentCodeList', null))
+    );
+  }
+
+  getValidAppointmentCode(id: string): Observable<ResponseObject<boolean>> {
+    const url = `${this.API_URL}/appointmentcode/${id}/valid`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+
+    return this.http.get<ResponseObject<boolean>>(url, options).pipe(
+      catchError(this.handleError<ResponseObject<boolean>>('getValidAppointmentCode', null))
     );
   }
   
@@ -41,7 +53,7 @@ export class AppointmentCodeService extends DataService {
     };
 
     return this.http.get<ResponseObject<AppointmentCode>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseObject<AppointmentCode>>('getAppointmentCode', null))
     );
   }
 
@@ -53,7 +65,7 @@ export class AppointmentCodeService extends DataService {
       withCredentials: true
     };
     return this.http.post<ResponseObject<AppointmentCode>>(url, appointmentCode, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseObject<AppointmentCode>>('saveAppointmentCode', null))
     );
   }
 
@@ -66,7 +78,7 @@ export class AppointmentCodeService extends DataService {
     return this.http
               .delete<ResponseObject<AppointmentCode>>(url, options)
               .pipe(
-                catchError((err) => Observable.throw(err))
+                catchError(this.handleError<ResponseObject<AppointmentCode>>('deleteAppointmentCode', null))
               );
   }
 
@@ -78,7 +90,7 @@ export class AppointmentCodeService extends DataService {
      };
 
     return this.http.get<ResponseList<any>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseList<any>>('getTypeList', null))
     );
   }
 
@@ -92,7 +104,7 @@ export class AppointmentCodeService extends DataService {
      };
 
     return this.http.get<ResponseList<any>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseList<any>>('getTypeCodeList', null))
     );
   }
 
@@ -105,7 +117,7 @@ export class AppointmentCodeService extends DataService {
      };
 
     return this.http.get<ResponseList<AppointmentCodeDetail>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseList<AppointmentCodeDetail>>('getAppointmentCodeDetailList', null))
     );
   }
 
@@ -117,7 +129,7 @@ export class AppointmentCodeService extends DataService {
     };
 
     return this.http.get<ResponseObject<AppointmentCodeDetail>>(url, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseObject<AppointmentCodeDetail>>('getAppointmentCodeDetail', null))
     );
   }
 
@@ -128,7 +140,7 @@ export class AppointmentCodeService extends DataService {
       withCredentials: true
     };
     return this.http.post<ResponseObject<AppointmentCodeDetail>>(url, appointmentCode, options).pipe(
-      catchError((err) => Observable.throw(err))
+      catchError(this.handleError<ResponseObject<AppointmentCodeDetail>>('saveAppointmentCodeDetail', null))
     );
   }
 
@@ -141,7 +153,7 @@ export class AppointmentCodeService extends DataService {
     return this.http
               .delete<ResponseObject<AppointmentCodeDetail>>(url, options)
               .pipe(
-                catchError((err) => Observable.throw(err))
+                catchError(this.handleError<ResponseObject<AppointmentCodeDetail>>('deleteAppointmentCodeDetail', null))
               );
   }
 
