@@ -11,6 +11,8 @@ import { CheckboxRendererComponent } from 'src/app/common/grid/renderer/checkbox
 
 import { DutyCodeFormComponent } from './component/duty-code/duty-code-form.component';
 import { DutyCodeService } from './service/duty-code.service';
+import { DutyCodeComponent } from './component/duty-code/duty-code.component';
+import { DutyCodeGridComponent } from './component/duty-code/duty-code-grid.component';
 
 @NgModule({
   imports: [
@@ -22,13 +24,15 @@ import { DutyCodeService } from './service/duty-code.service';
     AgGridModule.withComponents([ButtonRendererComponent, CheckboxRendererComponent]),
   ],
   declarations: [
-    DutyCodeFormComponent
+    DutyCodeFormComponent,
+    DutyCodeGridComponent,
+    DutyCodeComponent
   ],
   providers: [
     DutyCodeService
   ],
   exports: [
-
+    DutyCodeComponent
   ]
 })
 export class DutyModule { }

@@ -15,11 +15,12 @@ import { WorkgroupModule } from '../cooperation/workgroup/workgroup.module';
 import { UserPopupComponent } from '../common/component/user/user-popup.component';
 import { AppointmentModule } from '../hrm/appointment/appointment.module';
 import { EmployeeModule } from '../hrm/employee/employee.module';
+import { DutyModule } from '../hrm/duty/duty.module';
 
 
 @NgModule({
   imports: [
-    CommonModule,    
+    CommonModule,
     FormsModule,
     AppLayoutRoutingModule,
     NzLayoutModule,
@@ -30,7 +31,8 @@ import { EmployeeModule } from '../hrm/employee/employee.module';
     CommonFuncModule,
     WorkgroupModule,
     AppointmentModule,
-    EmployeeModule
+    EmployeeModule,
+    DutyModule
   ],
   declarations: [
     AppLayoutComponent

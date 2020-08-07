@@ -18,6 +18,31 @@ export class DutyCodeService extends DataService {
     super('/hrm', http, tokenExtractor);
   }
 
+  getDutyCodeList(params: any): Observable<ResponseList<DutyCode>> {
+    const url = `${this.API_URL}/dutycode`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true,
+      params: params
+    };
+
+    return this.http.get<ResponseList<DutyCode>>(url, options).pipe(
+      catchError(this.handleError<ResponseList<DutyCode>>('getDutyCodeList', null))
+    );
+  }
+
+  getValidDutyCode(id: string): Observable<ResponseObject<boolean>> {
+    const url = `${this.API_URL}/dutycode/${id}/valid`;
+    const options = {
+      headers: this.getAuthorizedHttpHeaders(),
+      withCredentials: true
+    };
+
+    return this.http.get<ResponseObject<boolean>>(url, options).pipe(
+      catchError(this.handleError<ResponseObject<boolean>>('getValidDutyCode', null))
+    );
+  }
+
   /**
    * 근태코드정보를 조회한다.
    * @param id 근태코드
@@ -44,7 +69,7 @@ export class DutyCodeService extends DataService {
       headers: this.getAuthorizedHttpHeaders(),
       withCredentials: true
     };
-    return this.http.post<ResponseObject<DutyCode>>(url, dept, options).pipe(
+    return this.http.post<ResponseObject<DutyCode>>(url, dutyCode, options).pipe(
       catchError(this.handleError<ResponseObject<DutyCode>>('saveDutyCode', null))
     );
   }

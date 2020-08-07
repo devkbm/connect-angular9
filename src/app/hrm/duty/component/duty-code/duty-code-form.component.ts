@@ -11,6 +11,7 @@ import { FormBase, FormType } from 'src/app/common/form/form-base';
 import { ResponseObject } from 'src/app/common/model/response-object';
 import { AppAlarmService } from 'src/app/common/service/app-alarm.service';
 import { DutyCodeService } from '../../service/duty-code.service';
+import { existingDutyCodeValidator } from '../../validator/duty-code-duplication-validator';
 
 @Component({
   selector: 'app-duty-code-form',
@@ -27,10 +28,16 @@ export class DutyCodeFormComponent extends FormBase implements OnInit {
 
   ngOnInit() {
     this.fg = this.fb.group({
-      dutyCode  : [ null, [ Validators.required ] ],
+      dutyCode  : new FormControl(null, {
+                    validators: Validators.required,
+                    asyncValidators: [existingDutyCodeValidator(this.dutyCodeService)],
+                    updateOn: 'blur'
+                  }),
       dutyName  : [ null, [ Validators.required ] ],
       enabled   : [ null]
     });
+
+    this.newForm();
   }
 
   public newForm(): void {
@@ -82,9 +89,9 @@ export class DutyCodeFormComponent extends FormBase implements OnInit {
         );
   }
 
-  public deleteForm(): void {
+  public deleteForm(id: string): void {
     this.dutyCodeService
-        .deleteDutyCode(this.fg.get('dutyCode').value)
+        .deleteDutyCode(id)
         .subscribe(
             (model: ResponseObject<DutyCode>) => {
             this.appAlarmService.changeMessage(model.message);
