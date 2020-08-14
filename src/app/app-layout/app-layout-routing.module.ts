@@ -4,10 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AppLayoutComponent } from './app-layout.component';
 
-import { BoardFormComponent } from '../cooperation/board/component/board-form.component';
-import { ArticleFormComponent } from '../cooperation/board/component/article-form.component';
-
-
 import { AuthorityComponent } from '../common/component/authority/authority.component';
 import { UserComponent } from '../common/component/user/user.component';
 import { ProgramComponent } from '../common/component/program/program.component';
@@ -25,6 +21,7 @@ import { HrmTypeComponent } from '../hrm/appointment/component/hrm-type/hrm-type
 import { SurveyFormComponent } from '../cooperation/survey/component/survey-form.component';
 import { DeptEmployeeListComponent } from '../hrm/employee/component/dept-employee-list/dept-employee-list.component';
 import { HrmRelationCodeComponent } from '../hrm/appointment/component/hrm-type/hrm-relation-code.component';
+import { DutyApplicationComponent } from '../hrm/duty/component/duty-application/duty-application.component';
 
 
 const layoutroutes: Routes = [
@@ -51,7 +48,8 @@ const layoutroutes: Routes = [
       {path: 'appointmentledger',   component: LedgerComponent},
       {path: 'employee',      component: EmployeeMasterComponent},
       {path: 'deptemployeelist',      component: DeptEmployeeListComponent},
-      {path: 'dutycode',      component: DutyCodeComponent}
+      {path: 'dutycode',      component: DutyCodeComponent},
+      {path: 'dutyapplication',      component: DutyApplicationComponent},
     ]
   }
 ];

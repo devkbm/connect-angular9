@@ -1,3 +1,6 @@
+
+import { DutyApplicationGridComponent } from './component/duty-application/duty-application-grid.component';
+import { DutyApplicationService } from './service/duty-application.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +16,9 @@ import { DutyCodeFormComponent } from './component/duty-code/duty-code-form.comp
 import { DutyCodeService } from './service/duty-code.service';
 import { DutyCodeComponent } from './component/duty-code/duty-code.component';
 import { DutyCodeGridComponent } from './component/duty-code/duty-code-grid.component';
+import { DutyApplicationFormComponent } from './component/duty-application/duty-application-form.component';
+import { DutyApplicationComponent } from './component/duty-application/duty-application.component';
+import { HrmCoreModule } from '../hrm-core/hrm-core.module';
 
 @NgModule({
   imports: [
@@ -22,17 +28,23 @@ import { DutyCodeGridComponent } from './component/duty-code/duty-code-grid.comp
     CommonFuncModule,
     NgZorroAntdModule,
     AgGridModule.withComponents([ButtonRendererComponent, CheckboxRendererComponent]),
+    HrmCoreModule
   ],
   declarations: [
     DutyCodeFormComponent,
     DutyCodeGridComponent,
-    DutyCodeComponent
+    DutyCodeComponent,
+    DutyApplicationFormComponent,
+    DutyApplicationGridComponent,
+    DutyApplicationComponent
   ],
   providers: [
-    DutyCodeService
+    DutyCodeService,
+    DutyApplicationService
   ],
   exports: [
-    DutyCodeComponent
+    DutyCodeComponent,
+    DutyApplicationComponent
   ]
 })
 export class DutyModule { }
