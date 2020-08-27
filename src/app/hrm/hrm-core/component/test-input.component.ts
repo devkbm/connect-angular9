@@ -5,52 +5,53 @@ import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR, NG_VALIDATORS, Vali
   selector: 'app-test-input',
   templateUrl: './test-input.component.html',
   styleUrls: ['./test-input.component.css']
-  /*providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TestInputComponent),
-      multi: true
-    }
-  ]*/
 })
 export class TestInputComponent implements ControlValueAccessor {
 
-  value: any = '';
   @Input() disabled: boolean;
+  @Input() label: string;
+  @Input() placeholder: string = '';
+  @Input() type: 'text' | 'email' | 'password' = 'text';
 
-  constructor(@Self()  @Optional()
-    private ngControl: NgControl) {
+  value: any = '';
+
+  constructor(@Self()  @Optional() private ngControl: NgControl) {
       if (this.ngControl) {
         this.ngControl.valueAccessor = this;
       }
   }
-  /*
-  validate(control: AbstractControl): ValidationErrors {
-    // throw new Error("Method not implemented.");
-  }
 
-  registerOnValidatorChange?(fn: () => void): void {
-    // throw new Error("Method not implemented.");
-  }
-*/
-
+  /**
+   * Write form value to the DOM element (model => view)
+   */
   writeValue(value: any): void {
     this.value = value;
   }
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
+  /**
+   * Write form disabled state to the DOM element (model => view)
+   */
+  setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 
-  private onChange = (_: any) => {};
-  private onTouched() {}
+  /**
+   * Update form when DOM element value changes (view => model)
+   */
+  registerOnChange(fn: any): void {
+    // Store the provided function as an internal method.
+    this.onChange = fn;
+  }
+
+  /**
+   * Update form when DOM element is blurred (view => model)
+   */
+  registerOnTouched(fn: any): void {
+    // Store the provided function as an internal method.
+    this.onTouched = fn;
+  }
+
+  onChange(_: any) {}
+  onTouched() {}
 
 }

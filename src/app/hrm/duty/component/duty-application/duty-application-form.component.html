@@ -48,6 +48,7 @@
                           [nzValue]="option.id">
                       </nz-option>
                   </nz-select>
+                  <app-employee-select formControlName="employeeId"></app-employee-select>
               </nz-form-control>
           </nz-form-item>
 
@@ -76,7 +77,7 @@
             <nz-form-label nzFor="dutyReason" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">근태사유</nz-form-label>
             <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" [nzErrorTip]="errorTpl">
                 <input nz-input id="dutyReason" formControlName="dutyReason" placeholder="근태사유를 입력해주세요.">
-                <app-test-input formControlName="dutyReason"></app-test-input>
+                <!--<app-test-input formControlName="dutyReason"></app-test-input>-->
                 <ng-template #errorTpl let-control>
                   <ng-container *ngIf="control.hasError('required')">
                       필수 입력 값입니다.
