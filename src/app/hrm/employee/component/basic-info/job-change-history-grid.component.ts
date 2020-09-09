@@ -46,11 +46,11 @@ export class JobChangeHistoryGridComponent extends AggridFunction implements OnI
         width: 70,
         cellStyle: {'text-align': 'center'}
       },
-      { headerName: '식별자',     field: 'id',          width: 150 },
-      { headerName: '인사유형',   field: 'jobType',    width: 150 },
-      { headerName: '인사코드',   field: 'jobCode',    width: 150 },
-      { headerName: '시작일',     field: 'fromDate',    width: 200 },
-      { headerName: '종료일',     field: 'toDate',      width: 200 }
+      { headerName: '식별자',     field: 'id',            width: 150 },
+      { headerName: '인사유형',   field: 'jobType',       width: 150 },
+      { headerName: '인사코드',   field: 'jobCode',       width: 150 },
+      { headerName: '시작일',     field: 'period.from',   width: 200 },
+      { headerName: '종료일',     field: 'period.to',     width: 200 }
     ];
 
     this.defaultColDef = {
@@ -58,7 +58,7 @@ export class JobChangeHistoryGridComponent extends AggridFunction implements OnI
       resizable: true
     };
 
-    this.getRowNodeId = function(data) {
+    this.getRowNodeId = (data) => {
         return data.id;
     };
   }

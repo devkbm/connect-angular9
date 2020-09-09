@@ -34,7 +34,9 @@ export class DutyCodeFormComponent extends FormBase implements OnInit {
                     updateOn: 'blur'
                   }),
       dutyName  : [ null, [ Validators.required ] ],
-      enabled   : [ null]
+      enabled   : [ null],
+      dutyGroup : [ null],
+      comment   : [ null]
     });
 
     this.newForm();

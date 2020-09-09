@@ -37,6 +37,20 @@
     </div>
 
     <div nz-row nzGutter="8">
+          <div nz-col nzSpan="12">
+            <!-- 근태그룹 필드-->
+            <nz-form-item class="form-item">
+                <nz-form-label nzFor="dutyGroup" nzRequired [nzXs]="formLabelXs" [nzSm]="formLabelSm">근태그룹</nz-form-label>
+                <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm" [nzErrorTip]="errorTpl">
+                    <input nz-input id="dutyGroup" formControlName="dutyGroup" placeholder="근태그룹을 입력해주세요.">
+                    <ng-template #errorTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">
+                          필수 입력 값입니다.
+                      </ng-container>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
         <div nz-col nzSpan="12">
             <!--사용여부 필드-->
             <nz-form-item>
@@ -52,7 +66,18 @@
                 </nz-form-control>
             </nz-form-item>
         </div>
+    </div>
 
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <!-- 근태그룹 필드-->
+        <nz-form-item class="form-item">
+            <nz-form-label nzFor="comment" [nzXs]="formLabelXs" [nzSm]="formLabelSm">비고</nz-form-label>
+            <nz-form-control [nzXs]="formControlXs" [nzSm]="formControlSm">
+                <input nz-input id="comment" formControlName="comment" placeholder="비고내용을 입력해주세요.">
+            </nz-form-control>
+        </nz-form-item>
+      </div>
     </div>
 
 </form>
