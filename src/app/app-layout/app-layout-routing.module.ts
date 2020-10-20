@@ -22,6 +22,7 @@ import { SurveyFormComponent } from '../cooperation/survey/component/survey-form
 import { DeptEmployeeListComponent } from '../hrm/employee/component/dept-employee-list/dept-employee-list.component';
 import { HrmRelationCodeComponent } from '../hrm/appointment/component/hrm-type/hrm-relation-code.component';
 import { DutyApplicationComponent } from '../hrm/duty/component/duty-application/duty-application.component';
+import { HolidayComponent } from '../common/component/holiday/holiday.component';
 
 
 const layoutroutes: Routes = [
@@ -36,6 +37,7 @@ const layoutroutes: Routes = [
       {path: 'commoncode',    component: CommonCodeComponent},
       {path: 'dept',          component: DeptComponent},
       {path: 'term',          component: TermComponent},
+      {path: 'holiday',       component: HolidayComponent},
       /* 협업시스템 */
       {path: 'team',          component: TeamComponent},
       {path: 'board',         component: BoardComponent},

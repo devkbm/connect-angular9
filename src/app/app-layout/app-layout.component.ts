@@ -23,7 +23,7 @@ import { UserPopupComponent } from '../common/component/user/user-popup.componen
 })
 export class AppLayoutComponent implements OnInit  {
 
-  isCollapsed: boolean = false;
+  isCollapsed = false;
   triggerTemplate: TemplateRef<void> | null = null;
   selectedValue: string;
   message: string;
@@ -111,7 +111,7 @@ export class AppLayoutComponent implements OnInit  {
 
   selectMenuItem(url: string): void {
     sessionStorage.setItem('selectedMenu', url);
-    // '/home/' + 
+    // '/home/' +
     this.router.navigate([url]);
   }
 
@@ -141,7 +141,7 @@ export class AppLayoutComponent implements OnInit  {
     modal.afterClose.subscribe(result => console.log('[afterClose] The result is:', result));
 
     modal.open();
-    
+
   }
 
 }

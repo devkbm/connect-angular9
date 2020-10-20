@@ -1,3 +1,7 @@
+import { HolidayGridComponent } from './component/holiday/holiday-grid.component';
+import { HolidayComponent } from './component/holiday/holiday.component';
+import { HolidayFormComponent } from './component/holiday/holiday-form.component';
+import { HolidayService } from './service/holiday.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -96,20 +100,24 @@ import { DeptSelectComponent } from './component/dept/dept-select.component';
     DeptTreeComponent,
     CheckableDeptTreeComponent,
     DeptSelectComponent,
-    DeptComponent
+    DeptComponent,
+    HolidayFormComponent,
+    HolidayGridComponent,
+    HolidayComponent
   ],
   providers: [
     { provide: NZ_I18N, useValue: ko_KR },
     { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptor, multi: true },
-    { provide: COMPOSITION_BUFFER_MODE, useValue:false},
+    { provide: COMPOSITION_BUFFER_MODE, useValue: false},
     LoginService,
     UserService,
     UserSessionService,
     CommonCodeService,
     MenuService,
-    DeptService
+    DeptService,
+    HolidayService
   ],
-  exports: [    
+  exports: [
     LoginComponent,
     UserFormComponent,
     UserGridComponent,
@@ -130,7 +138,8 @@ import { DeptSelectComponent } from './component/dept/dept-select.component';
     CommonCodeComponent,
     DeptTreeComponent,
     CheckableDeptTreeComponent,
-    DeptSelectComponent
+    DeptSelectComponent,
+    HolidayComponent
   ]
 })
 export class CommonFuncModule { }
